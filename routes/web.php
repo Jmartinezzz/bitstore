@@ -43,6 +43,8 @@ Route::group(['prefix' => 'tienda'], function(){
 
   	Route::get('/', 'StoreController@index')->name('store.index');   
   	Route::get('/productos', 'StoreController@products')->name('products.index');   
+
+  	Route::post('/agregarCarrito/{prod}', 'OrderController@addCart')->name('addCart');   
   	
 });
 

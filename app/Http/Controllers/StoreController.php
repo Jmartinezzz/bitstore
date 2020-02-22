@@ -14,9 +14,9 @@ class StoreController extends Controller
 
     public function products()
     {     
-    	$placas = Product::where('category_id', 1)->orWhere('category_id', 2)->get();    	
+    	$placas = Product::where('category_id', 1)->orWhere('category_id', 2)->with('images')->get();    	
     	// $sensores = Product::where('category_id', 2)->get();
-    	$componentes = Product::where('category_id', 3)->get();
+    	$componentes = Product::where('category_id', 3)->with('images')->get();
     	
         return view('store.products.index', ['placas' => $placas, 'componentes' =>$componentes]);
     }
