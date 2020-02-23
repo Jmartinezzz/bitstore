@@ -24,7 +24,7 @@
                             <div class="tab-content" id="nav-tabContent">
                                 <!-- nav 1 (carrito) -->
                                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-carrito">
-                                    @foreach ($productos->products as $prod)
+                                    @forelse ($productos->products as $prod)
                                     <div class="row my-3">                          
                                         <div class="col-5">
                                         @foreach ($prod->images as $imge)
@@ -35,9 +35,11 @@
                                         <div class="col-7 text-left">
                                             <div class="form-group">
                                                 <label class="h3">{{ $prod->productName }}</label>
-                                                <a  href="" class="float-right" data-toggle="tooltip" data-placement="bottom" title="Eliminar del carrito">
+                                                {{ Form::open(['route' => ['delCart',$prod->id] ,'method' => 'delete', 'class' => 'formdel d-inline']) }}
+                                                <button type="button" class="eliminarDelCart float-right btn btn-link" data-toggle="tooltip" title="Eliminar del carrito">
                                                     <i class="fas fa-trash-alt text-dark  mr-2 fa-2x"></i>
-                                                </a>                    
+                                                </button>   
+                                                {{ Form::close() }}                                                             
                                             </div>
                                             <div class="form-group">                                                   
                                                 <label class="h5">precio: ${{ $prod->salePrice }}</label>
@@ -53,7 +55,14 @@
                                         </div>  
                                     </div>
                                     <hr class="bg-warning">
-                                    @endforeach
+                                    @empty
+                                    <div class="row my-5 justify-content-center"> 
+                                        <h3>Aún no tienes productos en el carrito</h3>
+                                        <div class="col-12">
+                                            <a href="{{ route('products.index') }}">Ver productos</a>
+                                        </div>
+                                    </div>
+                                    @endforelse
                                     <div class="row justify-content-end">
                                         <div class="col-2">
                                              <div class="form-group">
@@ -151,14 +160,47 @@
         $(this).parent().siblings('div').find('.subTotal').html('Sub total: $' + subTotal.toFixed(2));
     });
 
+    $('.eliminarDelCart').on('click', function(){ 
+        // $(this).parents('form:first').submit();
+
+        var route = $(this).parent('form:first').attr('action'); 
+        alertify.confirm('Eliminar del carrito', '¿Estàs seguro de eliminar del carrito?', function(){ 
+                      
+            var token = $('input[name=_token]').val();            
+            $.ajax({
+                url: route,
+                headers:{'X-CSRF-TOKEN':token},
+                type: 'delete',
+                dataType:"json",
+               
+                success:function(data){ 
+                 console.log(data);    
+                    if (data.mensaje == 'eliminado') {
+                        setTimeout(location.reload(), 1000);
+                        alertify.warning('Se eliminó del carrito');                       
+                    }else if (data.mensaje == 'error') {
+                        alertify.success('Se produjo un error');
+                    }
+                },
+                error:function(data){                    
+                    alertify.success('Se produjo un error');                                                                    
+                }
+            })
+             // $(this).parents('form:first').submit();
+        }, function(){ 
+    
+        });  
+ 
+    });
+
     $(function(){
         $('[data-toggle="tooltip"]').tooltip();
 
         $('.subTotal').each(function() {
             $(this).append($(this).parent().siblings('div').find('.precio').val());
-        });
-
-        
+        });        
     })
+
+   
 </script>
 @endsection

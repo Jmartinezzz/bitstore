@@ -38,4 +38,19 @@ class OrderController extends Controller
 	    	}
     	} 	
     }
+
+    public function delCart(Request $request, Product $prod){
+    	if ($request->ajax()) {
+    		if ($prods = Order::where('user_id',Auth::user()->id)->where('state', 'carrito')->first()) {
+    			foreach($prods->products as $i) {
+	    				if ($i->id == $prod->id) {
+	    					$prods->products()->detach($prod);
+	    					return response()->json(['mensaje' => 'eliminado']);
+	    				}
+	    		}	    			
+    		}else{
+    			return response()->json(['mensaje' => 'error']);
+    		}    		
+    	}
+    }
 }
