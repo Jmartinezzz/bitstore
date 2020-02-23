@@ -17,8 +17,7 @@ class CreateOrderDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_id');
-            $table->integer('quantity');
-            $table->decimal('price', 8, 2);
+            $table->integer('quantity');            
             $table->decimal('subTotal', 8, 2);
 
             $table->foreign('order_id')->references('id')->on('orders')

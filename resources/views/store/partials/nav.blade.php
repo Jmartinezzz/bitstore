@@ -41,7 +41,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a  href="cart.html">
+                    <a  href="{{ route('cart') }}">
                         <i class="fas fa-shopping-cart text-white  mr-2 fa-3x"></i>
                     </a>
                 </li>
