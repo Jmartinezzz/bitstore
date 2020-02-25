@@ -60,7 +60,8 @@
                                                 <input class="cantidad form-control" value="1" type="number" min="1">                                                
                                             </div>
                                              <div class="form-group">
-                                                <label class="h5 subTotal">Sub total: $</label>
+                                                <label class="h5 subTotal">Sub total: $</label> 
+                                                <input type="hidden" class="subTotalh">
                                             </div>
                                         </div>  
                                     </div>
@@ -78,7 +79,7 @@
                                     <div class="row justify-content-end">
                                         <div class="col-2">
                                              <div class="form-group">
-                                                <label class="h5">Total: $17.00</label>
+                                                <label class="h5" id="total">Total: $</label>
                                                 <button class="btn btn-sm btn-warning">Guardar y continuar</button>
                                             </div>
                                         </div>
@@ -164,17 +165,27 @@
     var cantidad;
     var precio;
     var subTotal;
+    var total = 0;
+
+    function calcularTotal(){
+        total = 0;
+        $('.subTotalh').each(function() {
+            total += parseFloat($(this).val());
+            $('#total').empty().append('Total :$' + total.toFixed(2))
+        });
+    }
 
     $('.cantidad').on('change', function(){
         cantidad = parseFloat($(this).val());
         precio = parseFloat($(this).parent().siblings('div').find('.precio').val());
         subTotal = cantidad * precio;
         $(this).parent().siblings('div').find('.subTotal').html('Sub total: $' + subTotal.toFixed(2));
+        $(this).parent().siblings('div').find('.subTotalh').val(subTotal);
+        calcularTotal();
     });
 
     $('.eliminarDelCart').on('click', function(){ 
         // $(this).parents('form:first').submit();
-
         var route = $(this).parent('form:first').attr('action'); 
         alertify.confirm('Eliminar del carrito', '¿Estàs seguro de eliminar del carrito?', function(){ 
                       
@@ -208,9 +219,16 @@
     $(function(){
         $('[data-toggle="tooltip"]').tooltip();
 
+
+
         $('.subTotal').each(function() {
             $(this).append($(this).parent().siblings('div').find('.precio').val());
-        });        
+        });
+        $('.subTotalh').each(function() {
+            $(this).val($(this).parent().siblings('div').find('.precio').val());
+        }); 
+
+        calcularTotal();     
     })
 
    

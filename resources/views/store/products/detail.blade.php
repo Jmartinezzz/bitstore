@@ -2,116 +2,102 @@
 @section('title', $product->productName)
 @section('activeProducts',"active")
 @section('content')
- <div class="container mt-4 shadow">
-            <div class="row mt-5">
-                <div class="col-md-6 ">
-                    <div class="col-10 ">
-                        <div class="slider-for">
-                            <div class="item">
-                                <img class="img-fluid" src="img/ard.png" alt="image" width="450" />
-                            </div>
-                            <div class="item">
-                                <img class="img-fluid" src="img/ard2.jpg" alt="image"  width="450"/>
-                            </div>
-                            <div class="item">
-                                <img class="img-fluid" src="img/ard3.png" alt="image" width="450" />
-                            </div>                            
-                        </div>
+<div class="container mt-4 shadow">
+    <div class="row mt-5">
+        <div class="col-md-6 ">
+            <div class="col-10 ">
+                <div class="slider-for">
+                    @foreach ($product->images as $img)
+                        <div class="item">
+                        <img class="img-fluid" src="{{ asset('img/productos/' . $img->img) }}" style="width: 90%; height: 100%;" />
+                    </div>
+                    @endforeach
+                </div>
 
-                        <div class="slider-nav">
-                             <div class="item">
-                                <img class="img-fluid" src="img/ard.png" alt="image"  />
+                <div class="slider-nav">
+                    @foreach ($product->images as $img)
+                    <div class="item">
+                        <img class="img-fluid" src="{{ asset('img/productos/' . $img->img) }}"/>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h1>{{ $product->productName }} <p class="d-inline ml-4 ">${{ $product->salePrice }}</p></h1>            
+            <p class="lead text-justify mb-5">{{ $product->description }}</p>
+            @guest()
+            <a href="{{ route('login') }}" class="btn btn-outline-warning"><i class="fas fa-shopping-cart  fa-2x"></i> Agregar</a>
+             <a href="{{ route('login') }}" class="btn btn-outline-warning ml-2"><i class="fas fa-credit-card  fa-2x"></i> Comprar</a>
+            @else                     
+            <form method="post" action="{{ route('addCart', $product->id) }}" class="d-inline">
+                @csrf
+                <button type="button" class="btnAddCarrito btn btn-outline-warning "><i class="fas fa-shopping-cart fa-2x "></i>Agregar</button>  
+            </form> 
+             <a href="{{ route('login') }}" class="btn btn-outline-warning ml-2"><i class="fas fa-credit-card  fa-2x"></i> Comprar</a>   
+            @endguest
+        </div>
+    </div>        
+    <!-- Articulos similaress -->
+    <div class="jumbotron mt-4">
+        <h1 class="display-4 text-center mb-4">Articulos similares</h1>
+        <div class="row carru">
+            @foreach ($similares as $similar)
+            <div class="col-3 col-sm-6 mb-4">
+                <div class="card">
+                     @foreach ($similar->images as $imge)
+                        <img src="{{ asset('img/productos/' . $imge->img) }}" class="card-img-top" style="width: 300px; height: 300px">
+                    @break
+                    @endforeach
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ $similar->productName ." $" . $similar->salePrice }}</h5>                        
+                        <div class="row justify-content-center">
+                        @guest()
+                            <div class="col-3">                               
+                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></a>  
                             </div>
-                            <div class="item">
-                                <img class="img-fluid" src="img/ard2.jpg" alt="image" />
+                        @else                          
+                            <div class="col-3">
+                               <form class="formAddCarrito" method="post" action="{{ route('addCart', $placa->id) }}">
+                                    @csrf
+                                    <button type="button" class="btnAddCarrito btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></button>  
+                               </form>                      
                             </div>
-                            <div class="item">
-                                <img class="img-fluid" src="img/ard3.png" alt="image" />
-                            </div>   
+                        @endguest
+                            <div class="col-3">
+                                <a href="{{ route('product.detail', $similar) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
+                            </div>
+                            @guest()
+                            <div class="col-3">
+                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                            </div>
+                            @else
+                            <div class="col-3">
+                                <a href="" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                            </div>
+                            @endguest
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <h1>{{ $product->productName }}</h1>
-                    <p class="lead text-justify mb-5">{{ $product->description }}</p>
-                     <a href="product.html" class="btn btn-outline-warning"><i class="fas fa-shopping-cart  fa-2x"></i> Agregar</a>
-                     <a href="cart.html" class="btn btn-outline-warning ml-2"><i class="fas fa-credit-card  fa-2x"></i> Comprar</a>
-                </div>
-            </div>        
-
-            <!-- Recien llegados -->
-            <div class="jumbotron mt-4">
-                <h1 class="display-4 text-center mb-4">Articulos similares</h1>
-                <div class="row carru">
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card">
-                            <img src="img/ard.png" class="card-img-top" width="30">
-                            <div class="card-body">
-                                <h5 class="card-titl text-center">Titulo del producto</h5>                            
-                                <a href="product.html" class="btn btn-sm btn-outline-warning float-right"><i class="fas fa-shopping-cart  fa-2x"></i></a>
-                                <a href="product.html" class="btn btn-sm btn-outline-warning float-right mr-3"><i class="fas fa-eye fa-2x"></i></a>
-                            </div>
-                        </div>
-                    </div>   
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card">
-                            <img src="img/ard.png" class="card-img-top" width="30">
-                            <div class="card-body">
-                                <h5 class="card-titl text-center">Titulo del producto</h5>                            
-                                <a href="product.html" class="btn btn-sm btn-outline-warning float-right"><i class="fas fa-shopping-cart  fa-2x"></i></a>
-                                <a href="product.html" class="btn btn-sm btn-outline-warning float-right mr-3"><i class="fas fa-eye fa-2x"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card">
-                            <img src="img/ard.png"  class="card-img-top" width="30">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">Titulo del producto</h5>                            
-                                <a href="product.html" class="btn btn-sm btn-outline-warning float-right"><i class="fas fa-shopping-cart  fa-2x"></i></a>
-                                <a href="product.html" class="btn btn-sm btn-outline-warning float-right mr-3"><i class="fas fa-eye fa-2x"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card">
-                            <img src="img/ard.png"  class="card-img-top" width="30">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">Titulo del producto</h5>                            
-                                <a href="product.html" class="btn btn-sm btn-outline-warning float-right"><i class="fas fa-shopping-cart  fa-2x"></i></a>
-                                <a href="product.html" class="btn btn-sm btn-outline-warning float-right mr-3"><i class="fas fa-eye fa-2x"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card">
-                            <img src="img/ard.png"  class="card-img-top" width="30">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">Titulo del producto</h5>                            
-                                <a href="product.html" class="btn btn-sm btn-outline-warning float-right"><i class="fas fa-shopping-cart  fa-2x"></i></a>
-                                <a href="product.html" class="btn btn-sm btn-outline-warning float-right mr-3"><i class="fas fa-eye fa-2x"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card">
-                            <img src="img/ard.png"  class="card-img-top" width="30">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">Titulo del producto</h5>                            
-                                <a href="product.html" class="btn btn-sm btn-outline-warning float-right"><i class="fas fa-shopping-cart  fa-2x"></i></a>
-                                <a href="product.html" class="btn btn-sm btn-outline-warning float-right mr-3"><i class="fas fa-eye fa-2x"></i></a>
-                            </div>
-                        </div>
-                    </div>                 
-                </div>
-            </div><!-- Recien llegados -->
-        </div>       
+            </div>   
+            @endforeach                        
+        </div>
+    </div><!-- Articulos similaress -->
+</div>       
 @endsection
 @section('scriptsFooter')
 <script>   
     $(function() {
 
         $('[data-toggle="tooltip"]').tooltip();
+
+        $('.carru').slick({
+            infinite: true,
+            slidesToShow: 3,
+            slidesToScroll: 1,           
+            autoplay: true,     
+            lazyLoad: 'ondemand'
+        });
 
         $('.slider-for').slick({
           slidesToShow: 1,

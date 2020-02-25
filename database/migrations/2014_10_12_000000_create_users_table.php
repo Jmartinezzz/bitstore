@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('address',450)->nullable();
             $table->string('phone',15)->nullable();
             $table->string('photo')->nullable();
-            $table->char('gender',1);
-            $table->boolean('is_admin');
+            $table->char('gender',1)>nullable();
+            $table->boolean('is_admin')->default(0);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

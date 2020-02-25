@@ -32,7 +32,7 @@
         <div class="row">
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="card">
-                    <img src="img/ard.png" class="card-img-top" width="100">
+                    <img src="img/locales/ard.png" class="card-img-top" width="100">
                     <div class="card-body">
                         <h5 class="card-title">Titulo del producto</h5>
                         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -42,7 +42,7 @@
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="card">
-                    <img src="img/ard.png" class="card-img-top" width="100">
+                    <img src="img/locales/ard.png" class="card-img-top" width="100">
                     <div class="card-body">
                         <h5 class="card-title">Titulo del producto</h5>
                         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -52,7 +52,7 @@
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="card">
-                    <img src="img/ard.png" class="card-img-top" width="100">
+                    <img src="img/locales/ard.png" class="card-img-top" width="100">
                     <div class="card-body">
                         <h5 class="card-title">Titulo del producto</h5>
                         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -62,7 +62,7 @@
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="card">
-                    <img src="img/ard.png" class="card-img-top" width="100">
+                    <img src="img/locales/ard.png" class="card-img-top" width="100">
                     <div class="card-body">
                         <h5 class="card-title">Titulo del producto</h5>
                         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -108,7 +108,7 @@
         <div class="row">
             <div class="col-md-4 col-sm-6 mb-4">
                 <div class="card">
-                    <img src="img/ard.png" class="card-img-top" width="100">
+                    <img src="img/locales/ard.png" class="card-img-top" width="100">
                     <div class="card-body">
                         <h5 class="card-title">Titulo del producto</h5>
                         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -118,7 +118,7 @@
             </div>
             <div class="col-md-4 col-sm-6 mb-4">
                 <div class="card">
-                    <img src="img/ard.png" class="card-img-top" width="100">
+                    <img src="img/locales/ard.png" class="card-img-top" width="100">
                     <div class="card-body">
                         <h5 class="card-title">Titulo del producto</h5>
                         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -128,7 +128,7 @@
             </div>
             <div class="col-md-4 col-sm-6 mb-4">
                 <div class="card">
-                    <img src="img/ard.png" class="card-img-top" width="100">
+                    <img src="img/locales/ard.png" class="card-img-top" width="100">
                     <div class="card-body">
                         <h5 class="card-title">Titulo del producto</h5>
                         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>

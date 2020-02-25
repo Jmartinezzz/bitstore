@@ -21,6 +21,12 @@
                             <div class="col-3">                               
                                 <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></a>  
                             </div>
+                            <div class="col-3">
+                                <a href="{{ route('product.detail', $placa) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
+                            </div>
+                            <div class="col-3">
+                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                            </div>
                             @else                          
                             <div class="col-3">
                                <form class="formAddCarrito" method="post" action="{{ route('addCart', $placa->id) }}">
@@ -28,17 +34,11 @@
                                     <button type="button" class="btnAddCarrito btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></button>  
                                </form>                      
                             </div>
-                            @endguest                            
                             <div class="col-3">
                                 <a href="{{ route('product.detail', $placa) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
-                            </div>
-                            @guest()
+                            </div> 
                             <div class="col-3">
-                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
-                            </div>
-                            @else
-                            <div class="col-3">
-                                <a href="" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                                <a href="{{ route('cart') }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
                             </div>
                             @endguest
                             

@@ -11,18 +11,11 @@
                         <!-- Twitter -->
                         <a class="tw-ic">
                             <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                        </a>                            
-                        <!--Linkedin -->
-                        <a class="li-ic">
-                            <i class="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                        </a>
+                        </a>                                                    
                         <!--Instagram-->
                         <a class="ins-ic">
                             <i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                        </a> 
-                        <a class="ins-ic">
-                            <i class="fab fa-aws fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                        </a>                           
+                        </a>                                             
                     </div>
                 </div>
             </div>

@@ -51,7 +51,8 @@ class ProductController extends Controller
      */
     public function show(Product $prod)
     {
-        return view('store.products.detail', ['product' => $prod]);
+        $similares = Product::where('category_id', $prod->category_id)->get();  
+        return view('store.products.detail', ['product' => $prod, 'similares' => $similares]);
     }
 
     /**
