@@ -28,10 +28,9 @@
                                     <button type="button" class="btnAddCarrito btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></button>  
                                </form>                      
                             </div>
-                            @endguest
-                            
+                            @endguest                            
                             <div class="col-3">
-                                <a href="" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
+                                <a href="{{ route('product.detail', $placa) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
                             </div>
                             @guest()
                             <div class="col-3">
@@ -63,17 +62,32 @@
                     @break
                     @endforeach
                     <div class="card-body">
-                        <h5 class="card-title">{{ $compo->productName }}</h5>                        
+                        <h5 class="card-title text-center">{{ $compo->productName }}</h5>                        
                         <div class="row justify-content-center">
-                            <div class="col-3">
-                                <a href="product.html" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></a>                        
+                        @guest()
+                            <div class="col-3">                               
+                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></a>  
                             </div>
+                        @else                          
                             <div class="col-3">
-                                <a href="product.html" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
+                               <form class="formAddCarrito" method="post" action="{{ route('addCart', $placa->id) }}">
+                                    @csrf
+                                    <button type="button" class="btnAddCarrito btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></button>  
+                               </form>                      
                             </div>
+                        @endguest
                             <div class="col-3">
-                                <a href="product.html" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                                <a href="{{ route('product.detail', $compo) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
                             </div>
+                            @guest()
+                            <div class="col-3">
+                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                            </div>
+                            @else
+                            <div class="col-3">
+                                <a href="" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                            </div>
+                            @endguest
                         </div>
                     </div>
                 </div>

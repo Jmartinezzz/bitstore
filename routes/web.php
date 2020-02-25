@@ -42,7 +42,10 @@ Route::group(['prefix' => 'admin'], function(){
 Route::group(['prefix' => 'tienda'], function(){
 
   	Route::get('/', 'StoreController@index')->name('store.index');   
+
   	Route::get('/productos', 'StoreController@products')->name('products.index');   
+  	
+  	Route::get('/productos/{prod}', 'ProductController@show')->name('product.detail');   
 
   	Route::post('/agregarCarrito/{prod}', 'OrderController@addCart')->name('addCart');   
   	Route::delete('/eliminardelCarrito/{prod}', 'OrderController@delCart')->name('delCart');   

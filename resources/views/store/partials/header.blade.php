@@ -6,6 +6,7 @@
    <link rel="stylesheet" href="{{ asset('store/css/plantilla.css') }}">  
 </head>
 <body>
+	
    
     
        

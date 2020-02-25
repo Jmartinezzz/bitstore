@@ -16,9 +16,11 @@ class CartController extends Controller
      */
     public function index()
     {
-
-        $productos = Order::where('user_id',Auth::user()->id)->where('state', 'carrito')->first();     
-          
+        if (Order::where('user_id',Auth::user()->id)->get() && Order::where('user_id',Auth::user()->id)->where('state', 'carrito')->count() > 0) {
+            $productos = Order::where('user_id',Auth::user()->id)->where('state', 'carrito')->first() ;             
+        }else{
+            $productos = array();            
+        }                     
         return view('store.cart.index', ['productos' => $productos]);
     }
 
