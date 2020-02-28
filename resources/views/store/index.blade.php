@@ -2,6 +2,10 @@
 @section('title',"Inicio")
 @section('activeInicio',"active")
 @section('content')
+<!-- banner inicio -->
+<div>
+    <img class="img-fluid" src="{{ asset('img/locales/banner.jpg') }}">     
+</div><!-- banner inicio -->
  <div class="container mt-4 shadow">
     <!-- que buscas -->
     <div class="row justify-content-center text-center">
@@ -30,46 +34,46 @@
     <div class="jumbotron mt-4">
         <h1 class="display-4 text-center mb-4">Promociones semanales</h1>
         <div class="row">
-            <div class="col-md-3 col-sm-6 mb-4">
+            @foreach ($products as $prod)
+            <div class="col-md-3 col-sm-6 mb-2">
                 <div class="card">
-                    <img src="img/locales/ard.png" class="card-img-top" width="100">
+                    @foreach ($prod->images as $imge)
+                        <img src="{{ asset('img/productos/' . $imge->img) }}" class="card-img-top img-fluid" style="width: 450px; height: 300px">
+                    @break
+                    @endforeach
                     <div class="card-body">
-                        <h5 class="card-title">Titulo del producto</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <a href="product.html" class="btn btn-sm btn-outline-success float-right">button</a>
+                        <h5 class="card-title text-center">{{ $prod->productName . " $" . $prod->salePrice }}</h5>                        
+                        <div class="row justify-content-center">
+                            @guest()
+                            <div class="col-3">                               
+                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></a>  
+                            </div>
+                            <div class="col-3">
+                                <a href="{{ route('product.detail', $prod) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
+                            </div>
+                            <div class="col-3">
+                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                            </div>
+                            @else                          
+                            <div class="col-3">
+                               <form class="formAddCarrito" method="post" action="{{ route('addCart', $prod->id) }}">
+                                    @csrf
+                                    <button type="button" class="btnAddCarrito btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></button>  
+                               </form>                      
+                            </div>
+                            <div class="col-3">
+                                <a href="{{ route('product.detail', $prod) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
+                            </div> 
+                            <div class="col-3">
+                                <a href="{{ route('cart') }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                            </div>
+                            @endguest
+                            
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="img/locales/ard.png" class="card-img-top" width="100">
-                    <div class="card-body">
-                        <h5 class="card-title">Titulo del producto</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <a href="product.html" class="btn btn-sm btn-outline-success float-right">button</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="img/locales/ard.png" class="card-img-top" width="100">
-                    <div class="card-body">
-                        <h5 class="card-title">Titulo del producto</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <a href="product.html" class="btn btn-sm btn-outline-success float-right">button</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="img/locales/ard.png" class="card-img-top" width="100">
-                    <div class="card-body">
-                        <h5 class="card-title">Titulo del producto</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <a href="product.html" class="btn btn-sm btn-outline-success float-right">button</a>
-                    </div>
-                </div>
-            </div>
+            </div>   
+            @endforeach             
         </div>
     </div><!-- promociones semanales -->
 </div>
@@ -78,18 +82,18 @@
     <ol class="carousel-indicators">
         <li data-target="#indicadores" data-slide-to="0" class="active"></li>
         <li data-target="#indicadores" data-slide-to="1"></li>
-        <li data-target="#indicadores" data-slide-to="2"></li>
+        <li data-target="#indicadores" data-slide-to="2"></li>     
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://w.wallhaven.cc/full/13/wallhaven-13mk9v.jpg" height="440" class="d-block w-100" alt="...">
+            <img src="{{ asset('img/locales/bts3.jpg') }}" class="img-fluid d-block w-100 " style="min-height: 150px;max-height: 420px">
         </div>
         <div class="carousel-item">
-            <img src="https://w.wallhaven.cc/full/xl/wallhaven-xlekzz.jpg" height="440" class="d-block w-100" alt="...">
+            <img src="{{ asset('img/locales/logo1.jpg') }}" class="d-block w-100 img-fluid" style="min-height: 150px;max-height: 420px">
         </div>
-        <div class="carousel-item">
-            <img src="https://w.wallhaven.cc/full/76/wallhaven-76rg6o.png" height="440" class="d-block w-100" alt="...">
-        </div>
+        <div class="carousel-item ">
+            <img src="{{ asset('img/locales/ard2.jpg') }}" class="d-block w-100 img-fluid" style="min-height: 150px;max-height: 420px">
+        </div>               
     </div>
     <a class="carousel-control-prev" href="#indicadores" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -101,44 +105,7 @@
     </a>
 </div><!-- slideshow -->
 
-<div class="container mt-3 shadow">
-    <!-- productos mas vendidos -->
-    <div class="jumbotron mt-4">
-        <h1 class="display-4 text-center mb-4">Productos más vendidos</h1>
-        <div class="row">
-            <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="img/locales/ard.png" class="card-img-top" width="100">
-                    <div class="card-body">
-                        <h5 class="card-title">Titulo del producto</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <button class="btn btn-sm btn-outline-success float-right">button</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="img/locales/ard.png" class="card-img-top" width="100">
-                    <div class="card-body">
-                        <h5 class="card-title">Titulo del producto</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <button class="btn btn-sm btn-outline-success float-right">button</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="img/locales/ard.png" class="card-img-top" width="100">
-                    <div class="card-body">
-                        <h5 class="card-title">Titulo del producto</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <button class="btn btn-sm btn-outline-success float-right">button</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!-- productos mas vendidos -->
-</div>
+
 
 @endsection
 @section('scriptsFooter')
@@ -147,6 +114,34 @@
         interval: 3000
     });
     $(function() {
+        
     });
+
+     $('.btnAddCarrito').on('click', function(){               
+            var data = $('#formAddCarrito').serialize();             
+            var token = $('input[name=_token]').val();
+            var route = $(this).parents('form:first').attr('action');               
+
+            $.ajax({
+                url: route,
+                headers:{'X-CSRF-TOKEN':token},
+                type: 'POST',
+                dataType:"json",
+                data:data,
+                success:function(data){     
+                    if (data.mensaje == 'existe') {
+                        alertify.warning('Producto Existente en el carrito');
+                    }else if (data.mensaje == 'agregado') {
+                        alertify.warning('Producto Agregado al carrito');
+                    }
+                
+                },
+                error:function(data){
+                    console.log(data);
+                    alertify.error('Se produjo un error');                                                                    
+                }
+            })
+        });
+
 </script>
 @endsection

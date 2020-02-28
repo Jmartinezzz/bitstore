@@ -33,8 +33,8 @@
             <form method="post" action="{{ route('addCart', $product->id) }}" class="d-inline">
                 @csrf
                 <button type="button" class="btnAddCarrito btn btn-outline-warning "><i class="fas fa-shopping-cart fa-2x "></i>Agregar</button>  
-            </form> 
-             <a href="{{ route('login') }}" class="btn btn-outline-warning ml-2"><i class="fas fa-credit-card  fa-2x"></i> Comprar</a>   
+            </form>             
+             <a href="{{ route('cart') }}" class="btnComprar btn btn-outline-warning ml-2"><i class="fas fa-credit-card  fa-2x"></i> Comprar</a>   
             @endguest
         </div>
     </div>        
@@ -50,7 +50,8 @@
                     @break
                     @endforeach
                     <div class="card-body">
-                        <h5 class="card-title text-center">{{ $similar->productName ." $" . $similar->salePrice }}</h5>                        
+                        <h5 class="card-title text-center">{{ $similar->productName }}</h5>
+                        <h5 class="text-center">{{ " $" . $similar->salePrice }}</h5>                        
                         <div class="row justify-content-center">
                         @guest()
                             <div class="col-3">                               
@@ -58,7 +59,7 @@
                             </div>
                         @else                          
                             <div class="col-3">
-                               <form class="formAddCarrito" method="post" action="{{ route('addCart', $placa->id) }}">
+                               <form class="formAddCarrito" method="post" action="{{ route('addCart', $similar->id) }}">
                                     @csrf
                                     <button type="button" class="btnAddCarrito btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></button>  
                                </form>                      
@@ -141,6 +142,32 @@
                 }
             })
         });
+
+        // $('.btnComprar').on('click', function(){               
+        //     var data = $('#formComprar').serialize();             
+        //     var token = $('input[name=_token]').val();
+        //     var route = $(this).parents('form:first').attr('action');               
+
+        //     $.ajax({
+        //         url: route,
+        //         headers:{'X-CSRF-TOKEN':token},
+        //         type: 'POST',
+        //         dataType:"json",
+        //         data:data,
+        //         success:function(data){     
+        //             if (data.mensaje == 'existe') {
+        //                 alertify.warning('Producto Existente en el carrito');                        
+        //             }else if (data.mensaje == 'agregado') {
+        //                 alertify.warning('Producto Agregado al carrito');
+        //             }
+                
+        //         },
+        //         error:function(data){
+        //             console.log(data);
+        //             alertify.error('Se produjo un error');                                                                    
+        //         }
+        //     })
+        // });
 
     });
 </script>

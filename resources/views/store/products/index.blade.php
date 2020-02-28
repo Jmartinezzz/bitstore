@@ -62,7 +62,7 @@
                     @break
                     @endforeach
                     <div class="card-body">
-                        <h5 class="card-title text-center">{{ $compo->productName }}</h5>                        
+                        <h5 class="card-title text-center">{{ $compo->productName . " $" . $compo->salePrice}}</h5>                        
                         <div class="row justify-content-center">
                         @guest()
                             <div class="col-3">                               
