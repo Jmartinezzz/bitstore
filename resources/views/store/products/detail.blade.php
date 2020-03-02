@@ -3,7 +3,7 @@
 @section('activeProducts',"active")
 @section('content')
 <div class="container mt-4 shadow">
-    <div class="row mt-5">
+    <div class="row mt-5 mb-3">
         <div class="col-md-6 ">
             <div class="col-10 ">
                 <div class="slider-for">
@@ -27,26 +27,29 @@
             <h1>{{ $product->productName }} <p class="d-inline ml-4 ">${{ $product->salePrice }}</p></h1>            
             <p class="lead text-justify mb-5">{{ $product->description }}</p>
             @guest()
-            <a href="{{ route('login') }}" class="btn btn-outline-warning"><i class="fas fa-shopping-cart  fa-2x"></i> Agregar</a>
-             <a href="{{ route('login') }}" class="btn btn-outline-warning ml-2"><i class="fas fa-credit-card  fa-2x"></i> Comprar</a>
+            <a href="" data-toggle="modal" data-target="#loginModal" class="btn btn-outline-warning"><i class="fas fa-shopping-cart  fa-2x"></i> Agregar</a>
+             <a href="" data-toggle="modal" data-target="#loginModal" class="btn btn-outline-warning ml-2"><i class="fas fa-credit-card  fa-2x"></i> Comprar</a>
             @else                     
             <form method="post" action="{{ route('addCart', $product->id) }}" class="d-inline">
                 @csrf
                 <button type="button" class="btnAddCarrito btn btn-outline-warning "><i class="fas fa-shopping-cart fa-2x "></i>Agregar</button>  
             </form>             
-             <a href="{{ route('cart') }}" class="btnComprar btn btn-outline-warning ml-2"><i class="fas fa-credit-card  fa-2x"></i> Comprar</a>   
+            <form method="post" action="{{ route('buy', $product->id) }}" class="d-inline">
+                @csrf
+                <button type="button" class="btnComprar btn btn-outline-warning ml-2"><i class="fas fa-credit-card fa-2x "></i> Comprar</button>  
+            </form>   
             @endguest
         </div>
     </div>        
     <!-- Articulos similaress -->
-    <div class="jumbotron mt-4">
+    <div class="jumbotron mt-5">
         <h1 class="display-4 text-center mb-4">Articulos similares</h1>
         <div class="row carru">
             @foreach ($similares as $similar)
             <div class="col-3 col-sm-6 mb-4">
                 <div class="card">
                      @foreach ($similar->images as $imge)
-                        <img src="{{ asset('img/productos/' . $imge->img) }}" class="card-img-top" style="width: 300px; height: 300px">
+                        <img src="{{ asset('img/productos/' . $imge->img) }}" class="img-fluid card-img-top" style="width: 300px; height: 300px">
                     @break
                     @endforeach
                     <div class="card-body">
@@ -55,7 +58,7 @@
                         <div class="row justify-content-center">
                         @guest()
                             <div class="col-3">                               
-                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></a>  
+                                <a href="" data-toggle="modal" data-target="#loginModal" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></a>  
                             </div>
                         @else                          
                             <div class="col-3">
@@ -68,15 +71,18 @@
                             <div class="col-3">
                                 <a href="{{ route('product.detail', $similar) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
                             </div>
-                            @guest()
+                        @guest()
                             <div class="col-3">
-                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                                <a href="" data-toggle="modal" data-target="#loginModal" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
                             </div>
-                            @else
-                            <div class="col-3">
-                                <a href="" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                        @else
+                            <div class="col-3">                                
+                                <form method="post" action="{{ route('buy', $similar->id) }}" class="d-inline">
+                                    @csrf
+                                    <button type="button" class="btnComprar btn btn-sm btn-outline-warning"><i class="fas fa-credit-card fa-2x "></i></button>  
+                                </form>
                             </div>
-                            @endguest
+                        @endguest
                         </div>
                     </div>
                 </div>
@@ -92,14 +98,7 @@
 
         $('[data-toggle="tooltip"]').tooltip();
 
-        $('.carru').slick({
-            infinite: true,
-            slidesToShow: 3,
-            slidesToScroll: 1,           
-            autoplay: true,     
-            lazyLoad: 'ondemand'
-        });
-
+       
         $('.slider-for').slick({
           slidesToShow: 1,
           slidesToScroll: 1,

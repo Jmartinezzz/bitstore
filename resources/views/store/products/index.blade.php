@@ -11,7 +11,10 @@
             <div class="col-md-3 col-sm-6 mb-2">
                 <div class="card">
                     @foreach ($placa->images as $imge)
-                        <img src="{{ asset('img/productos/' . $imge->img) }}" class="card-img-top" style="width: 300px; height: 300px">
+                        <a href="{{ route('product.detail', $placa) }}">
+                            <img src="{{ asset('img/productos/' . $imge->img) }}" class="img-fluid card-img-top" style="width: 300px; height: 300px">
+                        </a>
+                        
                     @break
                     @endforeach
                     <div class="card-body">
@@ -19,13 +22,13 @@
                         <div class="row justify-content-center">
                             @guest()
                             <div class="col-3">                               
-                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></a>  
+                                <a href="" data-toggle="modal" data-target="#loginModal" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></a>  
                             </div>
                             <div class="col-3">
                                 <a href="{{ route('product.detail', $placa) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
                             </div>
                             <div class="col-3">
-                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                                <a href="" data-toggle="modal" data-target="#loginModal" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
                             </div>
                             @else                          
                             <div class="col-3">
@@ -38,7 +41,10 @@
                                 <a href="{{ route('product.detail', $placa) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
                             </div> 
                             <div class="col-3">
-                                <a href="{{ route('cart') }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                                <form method="post" action="{{ route('buy', $placa->id) }}" class="d-inline">
+                                    @csrf
+                                    <button type="button" class="btnComprar btn btn-sm btn-outline-warning"><i class="fas fa-credit-card fa-2x "></i></button>  
+                                </form>
                             </div>
                             @endguest
                             
@@ -58,7 +64,9 @@
             <div class="col-3 col-sm-6 mb-4">
                 <div class="card">
                      @foreach ($compo->images as $imge)
-                        <img src="{{ asset('img/productos/' . $imge->img) }}" class="card-img-top" style="width: 300px; height: 300px">
+                     <a href="{{ route('product.detail', $compo) }}">
+                         <img src="{{ asset('img/productos/' . $imge->img) }}" class="img-fluid card-img-top" style="width: 300px; height: 300px">
+                     </a>                        
                     @break
                     @endforeach
                     <div class="card-body">
@@ -66,7 +74,13 @@
                         <div class="row justify-content-center">
                         @guest()
                             <div class="col-3">                               
-                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></a>  
+                                <a href="" data-toggle="modal" data-target="#loginModal" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></a>  
+                            </div>
+                            <div class="col-3">
+                                <a href="{{ route('product.detail', $compo) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
+                            </div>
+                            <div class="col-3">
+                                <a href="" data-toggle="modal" data-target="#loginModal" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
                             </div>
                         @else                          
                             <div class="col-3">
@@ -75,19 +89,16 @@
                                     <button type="button" class="btnAddCarrito btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></button>  
                                </form>                      
                             </div>
-                        @endguest
                             <div class="col-3">
                                 <a href="{{ route('product.detail', $compo) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
-                            </div>
-                            @guest()
+                            </div>                                                                           
                             <div class="col-3">
-                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                                <form method="post" action="{{ route('buy', $compo->id) }}" class="d-inline">
+                                    @csrf
+                                    <button type="button" class="btnComprar btn btn-sm btn-outline-warning"><i class="fas fa-credit-card fa-2x "></i></button>  
+                                </form>
                             </div>
-                            @else
-                            <div class="col-3">
-                                <a href="" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
-                            </div>
-                            @endguest
+                        @endguest
                         </div>
                     </div>
                 </div>

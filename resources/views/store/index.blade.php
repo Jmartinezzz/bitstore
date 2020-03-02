@@ -6,7 +6,8 @@
 <div>
     <img class="img-fluid" src="{{ asset('img/locales/banner.jpg') }}">     
 </div><!-- banner inicio -->
- <div class="container mt-4 shadow">
+
+<div class="container mt-4 shadow">
     <!-- que buscas -->
     <div class="row justify-content-center text-center">
         <div class="col-6">
@@ -32,13 +33,15 @@
     </div><!-- buscador -->
     <!-- promociones semanales -->
     <div class="jumbotron mt-4">
-        <h1 class="display-4 text-center mb-4">Promociones semanales</h1>
-        <div class="row">
+        <h1 class="rounded display-4 text-center text-white mb-5 p-2 bg-gradient-warning">Promociones semanales</h1>
+        <div class="row carru">
             @foreach ($products as $prod)
             <div class="col-md-3 col-sm-6 mb-2">
                 <div class="card">
                     @foreach ($prod->images as $imge)
-                        <img src="{{ asset('img/productos/' . $imge->img) }}" class="card-img-top img-fluid" style="width: 450px; height: 300px">
+                    <a href="{{ route('product.detail', $prod) }}">
+                       <img src="{{ asset('img/productos/' . $imge->img) }}" class="card-img-top img-fluid" style="width: 450px; height: 300px"> 
+                    </a>                        
                     @break
                     @endforeach
                     <div class="card-body">
@@ -46,13 +49,13 @@
                         <div class="row justify-content-center">
                             @guest()
                             <div class="col-3">                               
-                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></a>  
+                                <a href="" data-toggle="modal" data-target="#loginModal" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></a>  
                             </div>
                             <div class="col-3">
                                 <a href="{{ route('product.detail', $prod) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
                             </div>
                             <div class="col-3">
-                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                                <a href="" data-toggle="modal" data-target="#loginModal" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
                             </div>
                             @else                          
                             <div class="col-3">
@@ -65,7 +68,10 @@
                                 <a href="{{ route('product.detail', $prod) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
                             </div> 
                             <div class="col-3">
-                                <a href="{{ route('cart') }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                                <form method="post" action="{{ route('buy', $prod) }}" class="d-inline">
+                                    @csrf
+                                    <button type="button" class="btnComprar btn btn-sm btn-outline-warning"><i class="fas fa-credit-card fa-2x "></i></button>  
+                                </form>
                             </div>
                             @endguest
                             
@@ -105,6 +111,60 @@
     </a>
 </div><!-- slideshow -->
 
+<div class="container shadow my-4">
+    <!-- mas vendidos -->
+    <div class="jumbotron">
+            <h1 class="rounded display-4 text-center text-white mb-5 p-2 bg-gradient-warning">Los más vendidos</h1>
+            <div class="row carru">
+                @foreach ($products as $prod)
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <div class="card">
+                        @foreach ($prod->images as $imge)
+                        <a href="{{ route('product.detail', $prod) }}">
+                            <img src="{{ asset('img/productos/' . $imge->img) }}" class="card-img-top img-fluid" style="width: 450px; height: 300px">
+                        </a>                            
+                        @break
+                        @endforeach
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ $prod->productName . " $" . $prod->salePrice }}</h5>                        
+                            <div class="row justify-content-center">
+                                @guest()
+                                <div class="col-3">                               
+                                    <a href="" data-toggle="modal" data-target="#loginModal" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></a>  
+                                </div>
+                                <div class="col-3">
+                                    <a href="{{ route('product.detail', $prod) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
+                                </div>
+                                <div class="col-3">
+                                    <a href="" data-toggle="modal" data-target="#loginModal" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x"></i></a>
+                                </div>
+                                @else                          
+                                <div class="col-3">
+                                   <form class="formAddCarrito" method="post" action="{{ route('addCart', $prod->id) }}">
+                                        @csrf
+                                        <button type="button" class="btnAddCarrito btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></button>  
+                                   </form>                      
+                                </div>
+                                <div class="col-3">
+                                    <a href="{{ route('product.detail', $prod) }}" class="btn btn-sm btn-outline-warning " data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye fa-2x"></i></a>                       
+                                </div> 
+                                <div class="col-3">
+                                    <form method="post" action="{{ route('buy', $prod) }}" class="d-inline">
+                                    @csrf
+                                    <button type="button" class="btnComprar btn btn-sm btn-outline-warning"><i class="fas fa-credit-card fa-2x "></i></button>  
+                                </form>
+                                </div>
+                                @endguest
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+                @endforeach             
+            </div>
+    </div><!-- mas vendidos -->
+</div>
+
 
 
 @endsection
@@ -113,12 +173,9 @@
     $('#indicadores').carousel({
         interval: 3000
     });
-    $(function() {
-        
-    });
+    
 
-     $('.btnAddCarrito').on('click', function(){               
-            var data = $('#formAddCarrito').serialize();             
+    $('.btnAddCarrito').on('click', function(){                            
             var token = $('input[name=_token]').val();
             var route = $(this).parents('form:first').attr('action');               
 
@@ -127,7 +184,6 @@
                 headers:{'X-CSRF-TOKEN':token},
                 type: 'POST',
                 dataType:"json",
-                data:data,
                 success:function(data){     
                     if (data.mensaje == 'existe') {
                         alertify.warning('Producto Existente en el carrito');
@@ -141,7 +197,7 @@
                     alertify.error('Se produjo un error');                                                                    
                 }
             })
-        });
+    });   
 
 </script>
 @endsection

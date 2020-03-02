@@ -55,11 +55,70 @@
 </main>
     <script src="{{ asset('store/js/plantilla.js') }}"></script>
     <script>
+        var data; 
+        var token;
+        var route;        
+
         $("body").niceScroll({
             cursorcolor:"orange",
             cursorwidth:"9px",
             cursorborder:'none',
         });
+
+        $('.btnComprar').on('click', function(){
+                        
+            token = $('input[name=_token]').val();
+            route = $(this).parents('form:first').attr('action'); 
+
+             $.ajax({
+                url: route,
+                headers:{'X-CSRF-TOKEN':token},
+                type: 'POST',
+                dataType:"json",
+                success:function(data){     
+                    if (data.mensaje == 'existe') {
+                        $(location).attr('href',"{{ route('cart') }}");                       
+                        alertify.warning('Producto Existente en el carrito');
+                        
+                    }else if (data.mensaje == 'agregado') {
+                        $(location).attr('href',"{{ route('cart') }}");
+                        alertify.warning('Producto Agregado al carrito');                        
+                    }
+                
+                },
+                error:function(data){
+                    console.log(data);
+                    alertify.error('Se produjo un error');                                                                    
+                }
+            })              
+
+        });
+
+        if (window.matchMedia("(max-width: 440px)").matches) {            
+            $('.carru').slick({
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,           
+                autoplay: true,     
+                lazyLoad: 'ondemand'
+            });
+        }else if (window.matchMedia("(max-width: 991px)").matches) {
+            $('.carru').slick({
+                infinite: true,
+                slidesToShow: 2,
+                slidesToScroll: 1,           
+                autoplay: true,     
+                lazyLoad: 'ondemand'
+            });
+        }else{
+            $('.carru').slick({
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 1,           
+                autoplay: true,     
+                lazyLoad: 'ondemand'
+            });            
+        }
         
     </script>
     @guest()
@@ -141,6 +200,8 @@
                     }
                 })
             });
+
+
         </script>
     @endguest
     @yield('scriptsFooter')    
