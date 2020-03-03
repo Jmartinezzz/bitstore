@@ -15,8 +15,10 @@
                             <nav>
                                 <div class="nav nav-tabs " role="tablist" >
                                     <a class="nav-item nav-link active col-md-4" id="nav-carrito" data-toggle="tab" href="#nav-home" aria-controls="nav-home" aria-selected="true"><h5>Carrito</h5></a>
+
                                     <a class="nav-item nav-link col-md-4" id="nav-direccion" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"><h5>Dirección</h5></a>
-                                    <a class="nav-item nav-link col-md-4" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"><h6>Pago</h6></a>
+
+                                    <a class="nav-item nav-link col-md-4" id="nav-pago" data-toggle="tab" href="#nav-contact" role="tab"><h6>Pago</h6></a>
                                 </div>
                             </nav>
                         </div>
@@ -88,43 +90,41 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
                                 </div><!-- nav 1 (carrito) -->
 
                                 <!-- nav 2 (direccion) -->
                                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-direccion">
-                                   <div class="row my-3">                                                
+                                   <div class="row my-3">                  
                                         <div class="col-12">
-                                            <form>
+                                            <form class="d-inline" id="formDireccion">
+                                                @method('PATCH')
+                                                @csrf 
                                                 <div class="row">
                                                     <div class="col">
-                                                    <input type="text" class="form-control" placeholder="Nombre">
+                                                    <input name="name" type="text" class="form-control" placeholder="Nombre" value="{{ $datosUsuario->name }}">
                                                     </div>
                                                     <div class="col">
-                                                    <input type="text" class="form-control" placeholder="Apellido">
+                                                    <input name="lastName" type="text" class="form-control" placeholder="Apellido" value="{{ $datosUsuario->lastName }}">
                                                     </div>                                                        
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <textarea class="form-control" placeholder="Dirección" name="" id="" rows="2"></textarea>
+                                                        <textarea class="form-control" placeholder="Dirección" name="address" rows="2">{{ $datosUsuario->address }}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                    <input type="text" class="form-control" placeholder="Ciudad">
+                                                    <input type="text" class="form-control" placeholder="Ciudad" name="city" value="{{ $datosUsuario->city }}">
                                                     </div>
                                                     <div class="col">
-                                                    <input type="text" class="form-control" placeholder="Telefono">
+                                                    <input id="phone" type="text" class="form-control" placeholder="Telefono" name="phone" value="{{ $datosUsuario->phone }}">
                                                     </div>                                                        
                                                 </div>
-                                            </form>
                                         </div>        
                                     </div> 
                                     <div class="row justify-content-end">
                                         <div class="col-md-2">
                                              <div class="form-group">                        
-                                                <form class="d-inline">
-                                                    @csrf                                               
                                                     <button type="button" id="btnGuardar2" class="btn btn-sm btn-warning">Guardar y continuar</button>
                                                 </form>
                                             </div>
@@ -136,27 +136,30 @@
                                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                                     <div class="row my-3">                                                
                                         <div class="col-12">
-                                            <form>
+                                            <form id="formPago">
+                                                @csrf
                                                 <div class="row">
                                                     <div class="col">
-                                                        <input type="text" class="form-control" placeholder="Número de tarjeta">
+                                                        <input name="ntarjeta" id="ntarjeta" type="text" class="form-control" placeholder="Número de tarjeta">
                                                     </div>
                                                     <div class="col-2">
-                                                        <input type="text" class="form-control" placeholder="MM/YY">
+                                                        <input name="fecha" id="fecha" type="text" class="form-control" placeholder="MM/YY">
                                                     </div>  
                                                     <div class="col-2">
-                                                        <input type="text" class="form-control" placeholder="CVV">
+                                                        <input name="cvv" id="cvv" type="text" class="form-control" placeholder="CVV">
                                                     </div>                                                       
                                                 </div>                                                        
                                                 <div class="row">
                                                     <div class="col">
-                                                        <input type="text" class="form-control" placeholder="Nombre del tarjeta habiente">
+                                                        <input name="nombreTarjeta" type="text" class="form-control" placeholder="Nombre del tarjeta habiente">
                                                     </div>                                    
                                                 </div>
                                                 <div class="row mt-2 justify-content-end">
-                                                    <div class="col-3">
-                                                        <button class="btn btn-outline-warning"><i class="fas fa-credit-card"></i> Pagar</button>
-                                                        <button class="btn btn-outline-dark"><i class="fas fa-cancel"></i> cancelar</button>
+                                                    <div class="col-md-2">
+                                                        <button class="btn btn-outline-warning"><i class="fas fa-credit-card"></i> Pagar</button>                    
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <a href="{{ route('store.index') }}" class="btn btn-outline-dark"><i class="fas fa-cancel"></i> cancelar</a>
                                                     </div>
                                                 </div>
                                             </form>
@@ -176,10 +179,12 @@
 </div> <!-- contenido -->
 @endsection
 @section('scriptsFooter')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script>   
     var cantidad;
     var precio;
     var subTotal;
+    var datos;
     var total = 0;
 
     function calcularTotal(){
@@ -202,8 +207,7 @@
 
     $('.eliminarDelCart').on('click', function(){ 
         // $(this).parents('form:first').submit();
-        var route = $(this).parents('form').attr('action');
-        console.log(route); 
+        var route = $(this).parents('form').attr('action'); 
         alertify.confirm('Eliminar del carrito', '¿Estàs seguro de eliminar del carrito?', function(){ 
                       
             var token = $('input[name=_token]').val();            
@@ -240,6 +244,7 @@
         var total;
         var datos;
         var token = $('input[name=_token]').val();
+
         $("input[name='cantidad[]']").each(function(i){
             cantidad[i] = $(this).val();
         });
@@ -249,7 +254,6 @@
         });
 
         total = $('#totalh').val();
-
         datos = {'cantidad' : cantidad, 'subTotal' : subTotal, 'total' : total };
 
         $.ajax({
@@ -260,8 +264,7 @@
             type: 'POST',
             dataType:"json",
             data:datos,
-            success:function(data){     
-               console.log(data);
+            success:function(data){                    
                 if (data.mensaje == "guardado") {
                     alertify.warning('Carrito guardado');
                     $('body, html').animate({
@@ -276,13 +279,35 @@
                 alertify.success('Se produjo un error');                                                                    
             }
         })                                
+    });
 
+    $('#btnGuardar2').on('click', function(e){        
+        var token = $('input[name=_token]').val();
+        // var route = $(this).parents('form').attr('action');
+        datos = $('#formDireccion').serialize();        
+
+        $.ajax({            
+            url:'{{ route('saveAddress') }}',                 
+            headers:{'X-CSRF-TOKEN':token},
+            type: 'POST',
+            dataType:"json",
+            data:datos,
+            success:function(data){     
+                if (data.mensaje == "guardado") {
+                    alertify.warning('Dirección guardada');                    
+                    $('#nav-pago').tab('show');
+                }            
+            },
+            error:function(data){
+                alertify.success('Se produjo un error');                                                                    
+            }
+        })                                
     });
 
     $(function(){
         $('[data-toggle="tooltip"]').tooltip();
 
-
+         $('#phone').mask('0000-0000');
 
         $('.subTotal').each(function() {
             cantidad = parseFloat($(this).parent().siblings('div').find('.cantidad').val());

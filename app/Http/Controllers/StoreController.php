@@ -12,6 +12,16 @@ class StoreController extends Controller
         return view('store.index', ['products' => $products]);
     }
 
+    public function contact()
+    {   
+        return view('store.info.contactanos',);
+    }
+
+    public function company()
+    {   
+        return view('store.info.empresa',);
+    }
+
     public function products()
     {     
     	$placas = Product::where('category_id', 1)->orWhere('category_id', 2)->with('images')->get();    	

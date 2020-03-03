@@ -41,7 +41,11 @@ Route::group(['prefix' => 'admin'], function(){
 
 Route::group(['prefix' => 'tienda'], function(){
 
-  	Route::get('/', 'StoreController@index')->name('store.index');   
+  	Route::get('/', 'StoreController@index')->name('store.index');  
+
+  	Route::get('/contactanos', 'StoreController@contact')->name('store.contact'); 
+  	  
+  	Route::get('/quienes_somos', 'StoreController@company')->name('store.company');   
 
   	Route::get('/productos', 'StoreController@products')->name('products.index');   
   	
@@ -52,6 +56,8 @@ Route::group(['prefix' => 'tienda'], function(){
   	Route::post('/comprar/{prod}', 'OrderController@addCart')->name('buy');
 
   	Route::post('/guardar/{order}', 'OrderController@guardar')->name('saveCart');
+
+  	Route::patch('/guardarDireccion', 'OrderController@saveAddress')->name('saveAddress');
 
   	Route::delete('/eliminardelCarrito/{prod}', 'OrderController@delCart')->name('delCart');   
   	Route::get('/carrito', 'CartController@index')->name('cart');   

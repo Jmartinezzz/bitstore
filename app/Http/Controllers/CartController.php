@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Order;
 use App\Product;
+use App\User;
 
 class CartController extends Controller
 {
@@ -24,8 +25,10 @@ class CartController extends Controller
 
         }else{
             $productos = 0;            
-        }                     
-        return view('store.cart.index', ['productos' => $productos]);
+        }        
+
+        $datosUsuario = User::find(Auth::user()->id);                     
+        return view('store.cart.index', ['productos' => $productos, 'datosUsuario' => $datosUsuario]);
     }
 
     /**

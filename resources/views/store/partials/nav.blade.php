@@ -13,10 +13,10 @@
                     <a class="nav-link" href="{{ route('products.index') }}">Productos</a>
                 </li>
                 <li class="nav-item @yield('activeQs')">
-                    <a class="nav-link" href="#">¿Quienes somos?</a>
+                    <a class="nav-link" href="{{ route('store.company') }}">¿Quienes somos?</a>
                 </li>
                 <li class="nav-item @yield('activeContact')">
-                    <a class="nav-link" href="#">Contactanos</a>
+                    <a class="nav-link" href="{{ route('store.contact') }}">Contactanos</a>
                 </li>
             @guest                    
                 <li class="nav-item">

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use Auth;
 use App\Order;
 use App\Product;
+use App\User;
 
 class OrderController extends Controller
 {
@@ -71,5 +73,20 @@ class OrderController extends Controller
     		
     		return response()->json(['mensaje' => 'guardado']);
     	}
+    }
+
+    public function saveAddress(UserRequest $request)
+    {
+        if ($request->ajax()) {
+            $user = User::find(Auth::user()->id); 
+            $user->name = $request->name;
+            $user->lastName = $request->lastName;
+            $user->address = $request->address;
+            $user->phone = $request->phone;
+            $user->city = $request->city;
+            if ($user->update()) {
+                return response()->json(['mensaje' => 'guardado']);
+            }
+        }
     }
 }
