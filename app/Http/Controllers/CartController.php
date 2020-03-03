@@ -16,10 +16,14 @@ class CartController extends Controller
      */
     public function index()
     {
+        if (!Auth::check()) {
+           return redirect()->route('store.index');
+        }
         if (Order::where('user_id',Auth::user()->id)->get() && Order::where('user_id',Auth::user()->id)->where('state', 'carrito')->count() > 0) {
-            $productos = Order::where('user_id',Auth::user()->id)->where('state', 'carrito')->first() ;             
+            $productos = Order::where('user_id',Auth::user()->id)->where('state', 'carrito')->first() ;
+
         }else{
-            $productos = array();            
+            $productos = 0;            
         }                     
         return view('store.cart.index', ['productos' => $productos]);
     }

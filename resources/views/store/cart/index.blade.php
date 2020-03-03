@@ -31,8 +31,8 @@
                                             <a href="{{ route('products.index') }}">Ver productos</a>
                                         </div>
                                     </div>
-                                    @else
-                                         @forelse ($productos->products as $prod)
+                                    @else                                    
+                                        @forelse ($productos->products as $prod)
                                         <div class="row my-3">                          
                                             <div class="col-5">
                                             @isset ($prod->images)
@@ -45,7 +45,7 @@
                                         <div class="col-7 text-left">
                                             <div class="form-group">
                                                 <label class="h3">{{ $prod->productName }}</label>
-                                                {{ Form::open(['route' => ['delCart',$prod->id] ,'method' => 'delete', 'class' => 'formdel d-inline']) }}
+                                                {{ Form::open(['route' => ['delCart',$prod] ,'method' => 'delete', 'class' => 'formdel d-inline']) }}
                                                 <button type="button" class="eliminarDelCart float-right btn btn-link" data-toggle="tooltip" title="Eliminar del carrito">
                                                     <i class="fas fa-trash-alt text-dark  mr-2 fa-2x"></i>
                                                 </button>   
@@ -57,11 +57,11 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Cantidad:</label>
-                                                <input class="cantidad form-control" value="1" type="number" min="1">                                                
+                                                <input name="cantidad[]" class="cantidad form-control" value="{{ $prod->pivot->quantity }}" type="number" min="1">                                                
                                             </div>
                                              <div class="form-group">
                                                 <label class="h5 subTotal">Sub total: $</label> 
-                                                <input type="hidden" class="subTotalh">
+                                                <input name="subTotal[]" type="hidden" class="subTotalh">
                                             </div>
                                         </div>  
                                     </div>
@@ -72,18 +72,23 @@
                                         <div class="col-12">
                                             <a href="{{ route('products.index') }}">Ver productos</a>
                                         </div>
-                                    </div>
+                                    </div>                                   
                                     @endforelse
                                     @endempty
-                                   
+                                     
                                     <div class="row justify-content-end">
-                                        <div class="col-2">
+                                        <div class="col-md-2">
                                              <div class="form-group">
-                                                <label class="h5" id="total">Total: $</label>
-                                                <button class="btn btn-sm btn-warning">Guardar y continuar</button>
+                                                <label class="h5" id="total">Total: $</label>   
+                                                <input type="hidden" name="totalh" id="totalh">
+                                                <form class="d-inline">
+                                                    @csrf                                               
+                                                    <button type="button" id="btnGuardar" class="btn btn-sm btn-warning">Guardar y continuar</button>
+                                                </form>
                                             </div>
                                         </div>
-                                    </div>                                    
+                                    </div>
+                                    
                                 </div><!-- nav 1 (carrito) -->
 
                                 <!-- nav 2 (direccion) -->
@@ -114,7 +119,17 @@
                                                 </div>
                                             </form>
                                         </div>        
-                                    </div>                                      
+                                    </div> 
+                                    <div class="row justify-content-end">
+                                        <div class="col-md-2">
+                                             <div class="form-group">                        
+                                                <form class="d-inline">
+                                                    @csrf                                               
+                                                    <button type="button" id="btnGuardar2" class="btn btn-sm btn-warning">Guardar y continuar</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>                                     
                                 </div><!-- nav 2 (dirección) -->
 
                                 <!-- nav 3 (payment) -->
@@ -172,8 +187,9 @@
         $('.subTotalh').each(function() {
             total += parseFloat($(this).val());
             $('#total').empty().append('Total :$' + total.toFixed(2))
+            $('#totalh').empty().val(total.toFixed(2))
         });
-    }
+    }   
 
     $('.cantidad').on('change', function(){
         cantidad = parseFloat($(this).val());
@@ -186,7 +202,8 @@
 
     $('.eliminarDelCart').on('click', function(){ 
         // $(this).parents('form:first').submit();
-        var route = $(this).parent('form:first').attr('action'); 
+        var route = $(this).parents('form').attr('action');
+        console.log(route); 
         alertify.confirm('Eliminar del carrito', '¿Estàs seguro de eliminar del carrito?', function(){ 
                       
             var token = $('input[name=_token]').val();            
@@ -205,7 +222,8 @@
                         alertify.success('Se produjo un error');
                     }
                 },
-                error:function(data){                    
+                error:function(data){
+                    console.log(data);                    
                     alertify.success('Se produjo un error');                                                                    
                 }
             })
@@ -216,17 +234,70 @@
  
     });
 
+    $('#btnGuardar').on('click', function(){
+        var cantidad = [];
+        var subTotal = [];
+        var total;
+        var datos;
+        var token = $('input[name=_token]').val();
+        $("input[name='cantidad[]']").each(function(i){
+            cantidad[i] = $(this).val();
+        });
+
+        $("input[name='subTotal[]']").each(function(i){
+            subTotal[i] = $(this).val();
+        });
+
+        total = $('#totalh').val();
+
+        datos = {'cantidad' : cantidad, 'subTotal' : subTotal, 'total' : total };
+
+        $.ajax({
+            
+            url:'{{ route('saveCart', $productos) }}',                 
+            
+            headers:{'X-CSRF-TOKEN':token},
+            type: 'POST',
+            dataType:"json",
+            data:datos,
+            success:function(data){     
+               console.log(data);
+                if (data.mensaje == "guardado") {
+                    alertify.warning('Carrito guardado');
+                    $('body, html').animate({
+                        scrollTop: '0px'
+                    }, 300);
+                    $('#nav-direccion').tab('show');
+                }
+            
+            },
+            error:function(data){
+                console.log(data);
+                alertify.success('Se produjo un error');                                                                    
+            }
+        })                                
+
+    });
+
     $(function(){
         $('[data-toggle="tooltip"]').tooltip();
 
 
 
         $('.subTotal').each(function() {
-            $(this).append($(this).parent().siblings('div').find('.precio').val());
+            cantidad = parseFloat($(this).parent().siblings('div').find('.cantidad').val());
+            precio = parseFloat($(this).parent().siblings('div').find('.precio').val());
+            subTotal = cantidad * precio;
+            $(this).append(subTotal.toFixed(2));
         });
         $('.subTotalh').each(function() {
-            $(this).val($(this).parent().siblings('div').find('.precio').val());
-        }); 
+            cantidad = parseFloat($(this).parent().siblings('div').find('.cantidad').val());
+            precio = parseFloat($(this).parent().siblings('div').find('.precio').val());
+            subTotal = cantidad * precio;
+            $(this).val(subTotal.toFixed(2));
+            
+        });
+        
 
         calcularTotal();     
     })

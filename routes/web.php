@@ -47,8 +47,12 @@ Route::group(['prefix' => 'tienda'], function(){
   	
   	Route::get('/productos/{prod}', 'ProductController@show')->name('product.detail');   
 
-  	Route::post('/agregarCarrito/{prod}', 'OrderController@addCart')->name('addCart');   
-  	Route::post('/comprar/{prod}', 'OrderController@addCart')->name('buy');   
+  	Route::post('/agregarCarrito/{prod}', 'OrderController@addCart')->name('addCart'); 
+
+  	Route::post('/comprar/{prod}', 'OrderController@addCart')->name('buy');
+
+  	Route::post('/guardar/{order}', 'OrderController@guardar')->name('saveCart');
+
   	Route::delete('/eliminardelCarrito/{prod}', 'OrderController@delCart')->name('delCart');   
   	Route::get('/carrito', 'CartController@index')->name('cart');   
   	

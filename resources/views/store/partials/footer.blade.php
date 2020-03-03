@@ -70,7 +70,7 @@
             token = $('input[name=_token]').val();
             route = $(this).parents('form:first').attr('action'); 
 
-             $.ajax({
+            $.ajax({
                 url: route,
                 headers:{'X-CSRF-TOKEN':token},
                 type: 'POST',

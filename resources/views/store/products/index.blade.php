@@ -84,7 +84,7 @@
                             </div>
                         @else                          
                             <div class="col-3">
-                               <form class="formAddCarrito" method="post" action="{{ route('addCart', $placa->id) }}">
+                               <form class="formAddCarrito" method="post" action="{{ route('addCart', $compo->id) }}">
                                     @csrf
                                     <button type="button" class="btnAddCarrito btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></button>  
                                </form>                      
@@ -113,18 +113,10 @@
 <script>   
     $(function() {
 
-        $('[data-toggle="tooltip"]').tooltip()
-
-        $('.carru').slick({
-            infinite: true,
-            slidesToShow: 3,
-            slidesToScroll: 1,           
-            autoplay: true,     
-            lazyLoad: 'ondemand'
-        });
+        $('[data-toggle="tooltip"]').tooltip()      
 
         $('.btnAddCarrito').on('click', function(){               
-            var data = $('#formAddCarrito').serialize();             
+                        
             var token = $('input[name=_token]').val();
             var route = $(this).parents('form:first').attr('action');               
 
@@ -132,8 +124,7 @@
                 url: route,
                 headers:{'X-CSRF-TOKEN':token},
                 type: 'POST',
-                dataType:"json",
-                data:data,
+                dataType:"json",                
                 success:function(data){     
                     if (data.mensaje == 'existe') {
                         alertify.warning('Producto Existente en el carrito');

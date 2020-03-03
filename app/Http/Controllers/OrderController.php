@@ -24,7 +24,7 @@ class OrderController extends Controller
 	    				}
 	    			}	    				    		
 	    		}
-	    		$carrito->products()->syncWithoutDetaching($prod);
+	    		$carrito->products()->attach($prod, ['quantity' => 1]);
 	    		  		
 	    		return response()->json(['mensaje' => 'agregado']);
 	    	}else{
@@ -33,7 +33,7 @@ class OrderController extends Controller
 	    		$carrito->state = 'carrito';
 	    		$carrito->total = 0.0;
 	    		$carrito->save();
-	    		$carrito->products()->sync($prod);  
+	    		$carrito->products()->attach($prod, ['quantity' => 1]);  
 	    		return response()->json(['mensaje' => 'agregado']);  		    	
 	    	}
     	} 	
@@ -51,6 +51,25 @@ class OrderController extends Controller
     		}else{
     			return response()->json(['mensaje' => 'error']);
     		}    		
+    	}
+    }
+
+    public function guardar(Request $request, Order $order){
+    	if ($request->ajax()) {
+    		$i = 0;
+    		$total = 0;
+    		$orden = Order::where('user_id',Auth::user()->id)->where('state', 'carrito')->first();
+    
+  			foreach ($orden->products as $prod) {
+				$orden->products()->updateExistingPivot($prod, ['quantity' => $request->cantidad[$i], 'subTotal' => $request->subTotal[$i]]);				
+				$total += $request->subTotal[$i];
+				$i++;
+			}
+
+			$orden->total =	$total;
+			$orden->save();		
+    		
+    		return response()->json(['mensaje' => 'guardado']);
     	}
     }
 }
