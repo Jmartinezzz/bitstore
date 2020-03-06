@@ -13,14 +13,17 @@
           <!-- input -->
         <div class="row justify-content-center">
             <div class="col-sm-8">
-                <div class="input-group">
-                    <div class="custom-file">
-                        <input type="mail" class="form-control" placeholder="Comparte tu e-mail" style="color:white;">
+                <form id="formSubscription">
+                    @csrf                    
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input id="correoe" type="email" class="form-control" placeholder="Comparte tu e-mail" name="email" style="color:white;">
+                        </div>
+                        <div class="input-group-append">
+                            <button id="btnSuscripcion" class="btn btn-warning" type="button">Suscribirme</button>
+                        </div>
                     </div>
-                    <div class="input-group-append">
-                        <button class="btn btn-warning" type="button">Suscribirme</button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div><!-- input -->
 
@@ -65,8 +68,7 @@
             cursorborder:'none',
         });
 
-        $('.btnComprar').on('click', function(){
-                        
+        $('.btnComprar').on('click', function(){                    
             token = $('input[name=_token]').val();
             route = $(this).parents('form:first').attr('action'); 
 
@@ -91,7 +93,37 @@
                     alertify.error('Se produjo un error');                                                                    
                 }
             })              
+        });
 
+        $('#btnSuscripcion').on('click', function(){
+            token = $('input[name=_token]').val();            
+            datos = $('#formSubscription').serialize();            
+
+            $.ajax({
+                url: '{{ route('store.subscribe') }}',
+                headers:{'X-CSRF-TOKEN':token},
+                type: 'POST',
+                dataType:"json",
+                data:datos,
+                success:function(data){     
+                    if (data.mensaje == 'guardado') {               
+                        alertify.warning('Gracias por tu registro');
+                        $("#correoe").val("");                        
+                    }                
+                },
+                error:function(data){
+                    console.log(data);
+                    var errores = "¡Atención! <br>"
+                    if (data.responseJSON.errors) {
+                        $.each(data.responseJSON.errors, function(i, valor){
+                            errores += valor;
+                        });                        
+                    }else{
+                        errores += "se produjo un error";
+                    }
+                    alertify.success(errores);          
+                }
+            })              
         });
 
         if (window.matchMedia("(max-width: 440px)").matches) {            

@@ -41,7 +41,9 @@ Route::group(['prefix' => 'admin'], function(){
 
 Route::group(['prefix' => 'tienda'], function(){
 
-  	Route::get('/', 'StoreController@index')->name('store.index');  
+  	Route::get('/', 'StoreController@index')->name('store.index'); 
+
+  	Route::post('/suscribirme', 'SubscribersController@store')->name('store.subscribe');  
 
   	Route::get('/contactanos', 'StoreController@contact')->name('store.contact'); 
   	  
