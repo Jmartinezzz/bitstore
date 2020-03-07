@@ -1,3 +1,10 @@
+
+  @if (Auth::user()->is_admin == 0)
+    <script>
+      location.href = '{{ route('store.index') }}';
+    </script>
+  @endif
+
 <!DOCTYPE html>
 <html lang="es">
 

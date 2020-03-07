@@ -17,7 +17,7 @@
                     @csrf                    
                     <div class="input-group">
                         <div class="custom-file">
-                            <input id="correoe" type="email" class="form-control" placeholder="Comparte tu e-mail" name="email" style="color:white;">
+                            <input id="correoecd/" type="email" class="form-control" placeholder="Comparte tu e-mail" name="email" style="color:white;">
                         </div>
                         <div class="input-group-append">
                             <button id="btnSuscripcion" class="btn btn-warning" type="button">Suscribirme</button>
@@ -50,7 +50,7 @@
     <!-- Copyright -->
     <hr class="bg-white">
     <div class="footer-copyright text-center py-3">© 2020 Copyright:
-        <a href="https://mdbootstrap.com/education/bootstrap/"> Bitstore.com</a>
+        <a href="bitstoresv.com"> Bitstore.com</a>
     </div>
     <!-- Copyright -->
 </footer>
@@ -125,6 +125,12 @@
                 }
             })              
         });
+
+        if (window.matchMedia("(max-width: 770px)").matches) {
+                    
+            $('#imgcenter').css("height", "770");
+            $('#buttonTop').css("top", "25%");
+        }
 
         if (window.matchMedia("(max-width: 440px)").matches) {            
             $('.carru').slick({

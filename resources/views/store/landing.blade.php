@@ -1,4 +1,14 @@
-<header>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <link rel="icon" type="image/png" href="{{ asset('img/logos/ico2.png') }}" />
+    <title>Bitstore</title>        
+   <link rel="stylesheet" href="{{ asset('store/css/plantilla.css') }}">  
+</head>
+<body>
+	<header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a href="{{ route('raiz') }}">
             <img src="{{ asset('img/logos/logo4.png') }}" class="img-fluid" width="155">
@@ -7,19 +17,10 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarColor02">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item @yield('activeInicio')">
-                    <a class="nav-link" href="{{ route('store.index') }}">Inicio <span class="sr-only">(current)</span></a>
-                </li>
+            <ul class="navbar-nav ml-auto">               
                 <li class="nav-item @yield('activeProducts')">
-                    <a class="nav-link" href="{{ route('products.index') }}">Productos</a>
-                </li>
-                <li class="nav-item @yield('activeQs')">
-                    <a class="nav-link" href="{{ route('store.company') }}">¿Quienes somos?</a>
-                </li>
-                <li class="nav-item @yield('activeContact')">
-                    <a class="nav-link" href="{{ route('store.contact') }}">Contactanos</a>
-                </li>
+                    <a class="nav-link" href="{{ route('products.index') }}">Ir a la tienda</a>
+                </li>                
             @guest                    
                 <li class="nav-item">
                      <a class="nav-link" href="" data-toggle="modal" data-target="#loginModal"> Acceder</a>
@@ -64,7 +65,7 @@
                     <div class="modal-body">  
                         <div class="box">
                              <div class="content">                              
-                                <div class="form loginBox">
+                                <div class="form loginBox" style="display:none;">
                                     <form id="formLogin" method="POST" action="{{ route('login') }}">
                                     @csrf
                                         <div class="form-group row">
@@ -79,28 +80,12 @@
                                             <div class="col-md-9">
                                                 <input id="password" type="password" class="form-control" name="password" autocomplete="current-password">
                                             </div>
-                                        </div>
-                                        {{-- <div class="form-group row">
-                                            <div class="col-md-6 offset-md-4">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                                    <label class="form-check-label" for="remember">
-                                                        {{ __('Remember Me') }}
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div> --}}
+                                        </div>                                       
                                         <div class="form-group row mb-0">
                                             <div class="col-md-12 ">
                                                 <button id="btnLogin" type="button" class="btn btn-warning btn-block">
                                                     {{ __('Login') }}
-                                                </button>
-                                               {{--  @if (Route::has('password.request'))
-                                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                                        {{ __('Forgot Your Password?') }}
-                                                    </a>
-                                                @endif --}}
+                                                </button>                                               
                                             </div>
                                         </div>
                                     </form>
@@ -108,11 +93,10 @@
                              </div>
                         </div>
                         <div class="box">
-                            <div class="content registerBox" style="display:none;">
+                            <div class="content registerBox" >
                                 <div class="form">
                                     <form id="formRegistrar" method="POST" action="{{ route('register') }}">
                                         @csrf
-
                                         <div class="form-group row">
                                             <label for="nombre" class="col-md-3 col-form-label text-md-right">Nombre:</label>
 
@@ -158,12 +142,12 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <div class="forgot login-footer">
+                        <div class="forgot login-footer" style="display:none">
                             <span>¿No tienes cuenta? 
                                  <a href="javascript: showRegisterForm();">¡Registrate!</a>
                             </span>
                         </div>
-                        <div class="forgot register-footer" style="display:none">
+                        <div class="forgot register-footer" >
                              <span>¿Ya tienes cuenta?</span>
                              <a href="javascript: showLoginForm();">Inicia sesión</a>
                         </div>
@@ -172,3 +156,64 @@
           </div>
     </div>
     {{-- login modal --}}
+
+    {{-- imagenes --}}
+  
+    <div id="landinf3" class="carousel slide " data-ride="carousel">
+	    <div class="parallax-window img-fluid" data-parallax="scroll" data-image-src="{{ asset('img/landing/l2.jpg') }}" style="height: 600px">
+	      <div class="carousel-caption d-block" style="top: 40%">
+	        <h5 class="display-4 display-md-1 text-break" style="background-color: rgba(0,0,0,0.8);border-radius: 4px">SOMOS BITSTORE</h5>
+	        <p class="h3" style="background-color: rgba(0,0,0,0.8);border-radius: 4px; padding: 10px">La tienda de placas arduino y sensores que estabas esperando para poder llevar a cabo tus proyectos de electrónica y robótica.</p>
+	        
+	      </div>
+	    </div>
+	</div>
+
+    <div id="landinf2" class="carousel slide " data-ride="carousel">
+	    <div id="imgcenter" class="parallax-window img-fluid" data-parallax="scroll" data-image-src="{{ asset('img/landing/l1.jpg') }}" style="height: 470px">
+	      <div id="buttonTop" class="carousel-caption d-block" style="top: 40%">	        
+	        <button data-toggle="modal" data-target="#loginModal" class="btn btn-lg btn-warning">¡Me quiero registrar!</button>
+	      </div>
+	    </div>
+	</div>
+
+    <div id="landinf1" class="carousel slide " data-ride="carousel">
+	    <div class="parallax-window img-fluid" data-parallax="scroll" data-image-src="{{ asset('img/landing/l3.jpg') }}" style="height: 680px">
+	      <div class="carousel-caption d-inline d-md-block">
+	      	<h2 style="background-color: rgba(0,0,0,0.7);border-radius: 3px;padding: 8px">Crea tus propios proyectos con nuestros productos.</h2>
+	        <div class="row">
+	        	<div class="col-md-4">
+	        		<div class="card border-warning text-dark mb-3">
+					  <img src="{{ asset('img/locales/p1.jpg') }}" class="card-img-top img-fluid" style="height: 180px">
+					  <div class="card-body">
+					    <h5 class="card-title">Carrito con sensor de ultrasonido</h5>
+					    <p class="card-text">carrito que sabe donde hay una pared gracias a un sensor de ultrasonido.</p>					    
+					  </div>
+					</div>
+	        	</div>
+	        	<div class="col-md-4">
+	        		<div class="card border-warning text-dark mb-3">
+					  <img src="{{ asset('img/locales/p2.jpg') }}" class="card-img-top img-fluid" style="height: 180px">
+					  <div class="card-body">
+					    <h5 class="card-title">Arduino y servos</h5>
+					    <p class="card-text">potenciometro que controla el movimiento de un servomotor.</p>
+					  </div>
+					</div>
+	        	</div>
+	        	<div class="col-md-4">
+	        		<div class="card border-warning text-dark">
+					  <img src="{{ asset('img/locales/p3.jpg') }}" class="card-img-top img-fluid" style="height: 180px">
+					  <div class="card-body">
+					    <h5 class="card-title">Arduino 1 y pantalla led</h5>
+					    <p class="card-text">captura de datos con un sensor y mostrada en una pantalla led 16x16.</p>
+					  </div>
+					</div>
+	        	</div>
+	        </div>
+	      </div>
+	    </div>
+	</div>
+  
+  
+    {{-- imagenes --}}
+@include('store.partials.footer')

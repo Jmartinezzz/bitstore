@@ -43,7 +43,7 @@
                             <div class="col-3">
                                 <form method="post" action="{{ route('buy', $placa->id) }}" class="d-inline">
                                     @csrf
-                                    <button type="button" class="btnComprar btn btn-sm btn-outline-warning"><i class="fas fa-credit-card fa-2x "></i></button>  
+                                    <button type="button" data-toggle="tooltip" data-placement="bottom" title="Comprar" class="btnComprar btn btn-sm btn-outline-warning"><i class="fas fa-credit-card fa-2x "></i></button>  
                                 </form>
                             </div>
                             @endguest
@@ -95,7 +95,7 @@
                             <div class="col-3">
                                 <form method="post" action="{{ route('buy', $compo->id) }}" class="d-inline">
                                     @csrf
-                                    <button type="button" class="btnComprar btn btn-sm btn-outline-warning"><i class="fas fa-credit-card fa-2x "></i></button>  
+                                    <button type="button" class="btnComprar btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Comprar"><i class="fas fa-credit-card fa-2x "></i></button>  
                                 </form>
                             </div>
                         @endguest
@@ -113,7 +113,7 @@
 <script>   
     $(function() {
 
-        $('[data-toggle="tooltip"]').tooltip()      
+        $('[data-toggle="tooltip"]').tooltip();     
 
         $('.btnAddCarrito').on('click', function(){               
                         

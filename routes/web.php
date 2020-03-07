@@ -11,14 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('store.index');
-});
-
 
 // Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 
-Route::group(['prefix' => 'admin'], function(){
+Route::group(['prefix' => 'admin','middleware' => 'auth'], function(){
 
   	Route::get('/panel', 'AdminsController@index')->name('admin.index');
 
@@ -38,6 +34,10 @@ Route::group(['prefix' => 'admin'], function(){
 	});
  
 });
+
+Route::get('/', function () {
+   return view('store.landing');
+})->name('raiz');
 
 Route::group(['prefix' => 'tienda'], function(){
 
