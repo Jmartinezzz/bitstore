@@ -33,7 +33,7 @@ class SubscribersController extends Controller
         }
     }
 
-    public function contactus(SubscribersRequest $request)
+    public function contactus(Request $request)
     {
         $request->validate([
         'email' => 'required|email',
