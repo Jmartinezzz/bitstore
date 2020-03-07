@@ -39,7 +39,7 @@
                                             <div class="col-5">
                                             @isset ($prod->images)
                                                 @foreach ($prod->images as $imge)
-                                                    <img src="{{ asset('img/productos/' . $imge->img) }}" class="card-img-top" style="width: 220px; height: 200px">
+                                                    <img src="{{ asset('img/productos/' . $imge->img) }}" class="img-fluid card-img-top" style="width: 220px; height: 200px">
                                                 @break                                        
                                                 @endforeach                                                
                                             @endisset

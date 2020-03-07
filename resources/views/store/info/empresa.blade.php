@@ -13,8 +13,8 @@
         </div>
         <div class="col-lg-6">
           <h2>Sobre nuestra empresa.</h2>
-          <p class="text-justify">Somos una plataforma facilita la conexión de personas para comprar, vender o intercambiar bienes y servicios usados. Es completamente gratis, se puede hacer desde una computadora portátil o un teléfono móvil. Nuestro sitio web permitirá a miles de personas encontrar y vender muebles, instrumentos musicales, automóviles, casas y más. Puedes comprar y vender casi cualquier cosa con nuestro sitio.</p>
-          <p class="text-justify">Nuestro ideal es tener una pagina de Clasificados con una interfaz agradable disponible para todos que tengan algo que alquiler, vender, una oferta de empleo o un servicio para ofrecer. Ademas desde esta pagina Web el usuario podrá administrar sus listados, colocar fotos y actualizar todos los detalles para conseguir contacto directo de compradores.</p>
+          <p class="text-justify">Somos una plataforma ecommerce que busca lo comercialización de dispositivos electrónicos, en este caso placas arduino y tambinén sensores que ayudan al desarrollo de diferentes proyectos, con precios accesibles y distinción en la forma de compra mas envío del producto.</p>
+          <p class="text-justify">Nuestro ideal es tener un catálogo en línea que sea fácil de utilizar y ver, detallar bien las especificaciones de nuestros productos para que la experiencia de nuetros usuarios sea sencilla y rápida, para poder tener un crecimeinto y empezar a consolidarnos.</p>
         </div>
     </div>
     <br><br><br>
@@ -32,7 +32,7 @@
               <p class="card-text">Estudiante de 5to año de la carrera de ingeniería en sistemas computacionales de la universidad envangélica de El salvador, con grandes capacidades y metas que lograr.</p>
             </div>
             <div class="card-footer">
-              <a href="#">fercho.acles@acles.com</a>
+              <a href="#">fabio.bts@bitstoresv.com</a>
             </div>
           </div>
         </div>
@@ -45,7 +45,7 @@
               <p class="card-text">Estudiante de 5to año de la carrera de ingeniería en sistemas computacionales de la universidad envangélica de El salvador, con ganas de aprender siempre y con grandes propositos.</p>
             </div>
             <div class="card-footer">
-              <a href="#">jorge.acles@acles.com</a>
+              <a href="#">jorge.bts@bitstoresv.com</a>
             </div>
           </div>
         </div>
@@ -58,7 +58,7 @@
               <p class="card-text">Estudiante de 5to año de la carrera de ingeniería en sistemas computacionales de la universidad envangélica de El salvador, con fé en lograr las metas propuestas y firme en el aprendizaje.</p>
             </div>
             <div class="card-footer">
-              <a href="#">yil.acles@acles.com</a>
+              <a href="#">cordoba.bts@bitstoresv.com</a>
             </div>
           </div>
         </div>

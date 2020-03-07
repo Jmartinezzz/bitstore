@@ -59,7 +59,7 @@
           <div class="modal-dialog modal-sm">
               <div class="modal-content">
                  <div class="modal-header bg-dark">
-                  <h4 class="modal-title text-white">Login</h4>
+                  <h4 class="modal-title text-white">Registrate...</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                        
                     </div>
                     <div class="modal-body">  
@@ -171,7 +171,8 @@
 
     <div id="landinf2" class="carousel slide " data-ride="carousel">
 	    <div id="imgcenter" class="parallax-window img-fluid" data-parallax="scroll" data-image-src="{{ asset('img/landing/l1.jpg') }}" style="height: 470px">
-	      <div id="buttonTop" class="carousel-caption d-block" style="top: 40%">	        
+	      <div id="buttonTop" class="carousel-caption d-block" style="top: 40%">
+	      	<a href="{{ route('products.index') }}" class="btn btn-lg btn-warning mb-3 mb-md-0">¡Quiero ver los productos!</a>	        
 	        <button data-toggle="modal" data-target="#loginModal" class="btn btn-lg btn-warning">¡Me quiero registrar!</button>
 	      </div>
 	    </div>
