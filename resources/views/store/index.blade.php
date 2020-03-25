@@ -26,6 +26,12 @@
                 <div class="input-group">
                     <div class="custom-file">
                         <input type="search" class="form-control" placeholder="Ingresa el nombre del articulo que deseas" name="buscar">
+                        <select class="form-control w-50" name="categoria" id="">
+                            <option value="0">Todas las categorias</option>
+                            <option value="1">Placas</option>
+                            <option value="2">Sensores</option>
+                            <option value="3">Componentes</option>
+                        </select>
                     </div>
                     <div class="input-group-append">
                         <button class="btn btn-warning" type="submit" id="btnBuscar">Buscar</button>
