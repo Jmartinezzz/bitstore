@@ -126,6 +126,9 @@
             })              
         });
 
+    
+
+        // hacer el carrusel de imagenes responsive
         if (window.matchMedia("(max-width: 770px)").matches) {
                     
             $('#imgcenter').css("height", "770");

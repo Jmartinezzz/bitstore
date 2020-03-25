@@ -14,6 +14,9 @@
                 <li class="nav-item @yield('activeProducts')">
                     <a class="nav-link" href="{{ route('products.index') }}">Productos</a>
                 </li>
+                <li class="nav-item @yield('activeMedia')">
+                    <a class="nav-link" href="{{ route('store.media') }}">Videoteca</a>
+                </li>
                 <li class="nav-item @yield('activeQs')">
                     <a class="nav-link" href="{{ route('store.company') }}">¿Quienes somos?</a>
                 </li>
@@ -58,7 +61,7 @@
           <div class="modal-dialog modal-sm">
               <div class="modal-content">
                  <div class="modal-header bg-dark">
-                  <h4 class="modal-title text-white">Login</h4>
+                  <h4 class="modal-title text-white">Acceso</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                        
                     </div>
                     <div class="modal-body">  

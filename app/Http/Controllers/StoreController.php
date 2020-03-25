@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Video;
 
 class StoreController extends Controller
 {
@@ -20,6 +21,14 @@ class StoreController extends Controller
     public function company()
     {   
         return view('store.info.empresa',);
+    }
+
+    public function media()
+    {   
+        $videos = Video::all();
+        // dd($videos);
+      
+        return view('store.info.videoteca', ['videos' => $videos]);
     }
 
     public function products()

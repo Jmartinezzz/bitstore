@@ -40,7 +40,32 @@
             </form>   
             @endguest
         </div>
-    </div>        
+    </div>
+    {{-- foro para la comunidad --}}
+    <div class="row border" style="height:500px">
+        <div id="disqus_thread"></div>
+        <script>
+
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        
+        var disqus_config = function () {
+        this.page.url = 'bitstoresv.com';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = {{ $product->id }}; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://bitstore-1.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    {{-- foro para la comunidad --}}
+
     <!-- Articulos similaress -->
     <div class="jumbotron mt-5">
         <h1 class="display-4 text-center mb-4">Articulos similares</h1>
@@ -49,7 +74,7 @@
             <div class="col-3 col-sm-6 mb-4">
                 <div class="card">
                      @foreach ($similar->images as $imge)
-                        <img src="{{ asset('img/productos/' . $imge->img) }}" class="img-fluid card-img-top" style="width: 300px; height: 300px">
+                        <img src="{{ asset('img/productos/' . $imge->img) }}" class="img-fluid card-img-top" style="width: 100%; height: 300px">
                     @break
                     @endforeach
                     <div class="card-body">

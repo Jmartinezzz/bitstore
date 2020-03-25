@@ -21,14 +21,17 @@
     <!-- buscador -->
     <div class="row justify-content-center">
         <div class="col-10">
-            <div class="input-group">
-                <div class="custom-file">
-                    <input type="search" class="form-control" placeholder="Ingresa el nombre del articulo que deseas">
+            <form id="formBuscar" action="{{ route('products.search') }}" method="post">
+                @csrf                
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="search" class="form-control" placeholder="Ingresa el nombre del articulo que deseas" name="buscar">
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-warning" type="submit" id="btnBuscar">Buscar</button>
+                    </div>
                 </div>
-                <div class="input-group-append">
-                    <button class="btn btn-warning" type="button" id="inputGroupFileAddon04">Buscar</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div><!-- buscador -->
     <!-- promociones semanales -->
@@ -40,7 +43,7 @@
                 <div class="card">
                     @foreach ($prod->images as $imge)
                     <a href="{{ route('product.detail', $prod) }}">
-                       <img src="{{ asset('img/productos/' . $imge->img) }}" class="card-img-top img-fluid" style="width: 450px; height: 300px"> 
+                       <img src="{{ asset('img/productos/' . $imge->img) }}" class="card-img-top img-fluid" style="width: 100%; height: 300px"> 
                     </a>                        
                     @break
                     @endforeach

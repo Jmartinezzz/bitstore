@@ -55,6 +55,12 @@ class ProductController extends Controller
         return view('store.products.detail', ['product' => $prod, 'similares' => $similares]);
     }
 
+    public function search(Request $request)
+    {
+        $products = Product::where('productName','like', '%' . $request->buscar . '%')->get();        
+        return view('store.products.search', ['products' => $products]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

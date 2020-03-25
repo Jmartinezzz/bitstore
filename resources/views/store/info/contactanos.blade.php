@@ -11,7 +11,7 @@
         <!-- Map Column -->
         <div class="col-6 col-lg-8 mb-4">
           <!-- Embedded Google Map -->
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15505.867639643608!2d-89.25171477983555!3d13.690147596196601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f633028df64891b%3A0xab4bfef18ab598e5!2sSan+Benito%2C+San+Salvador!5e0!3m2!1ses!2ssv!4v1542377430753" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+          <iframe id="mapa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15505.867639643608!2d-89.25171477983555!3d13.690147596196601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f633028df64891b%3A0xab4bfef18ab598e5!2sSan+Benito%2C+San+Salvador!5e0!3m2!1ses!2ssv!4v1542377430753" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
           
         </div>
         <!-- Contact Details Column -->
@@ -81,6 +81,10 @@
 @section('scriptsFooter')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
   <script>
+    if (window.matchMedia("(max-width: 440px)").matches) {            
+            $('#mapa').width('380px');
+    }
+
     $(function(){
       $('#phone').mask('0000-0000');
     });

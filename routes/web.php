@@ -39,7 +39,10 @@ Route::get('/', function () {
    return view('store.landing');
 })->name('raiz');
 
-Route::group(['prefix' => 'tienda'], function(){
+Route::get('/destinos', 'Controller@index')->name('destinos.index');
+Route::post('/destinos', 'Controller@search')->name('destinos.search'); 
+
+Route::group(['prefix' => '/tienda'], function(){
 
   	Route::get('/', 'StoreController@index')->name('store.index'); 
 
@@ -47,10 +50,14 @@ Route::group(['prefix' => 'tienda'], function(){
   	Route::post('/contacto', 'SubscribersController@contactus')->name('contactus');  
 
   	Route::get('/contactanos', 'StoreController@contact')->name('store.contact'); 
+
+  	Route::get('/videoteca', 'StoreController@media')->name('store.media'); 
   	  
   	Route::get('/quienes_somos', 'StoreController@company')->name('store.company');   
 
-  	Route::get('/productos', 'StoreController@products')->name('products.index');   
+  	Route::get('/productos', 'StoreController@products')->name('products.index'); 
+
+  	Route::post('/productos/buscar', 'ProductController@search')->name('products.search');   
   	
   	Route::get('/productos/{prod}', 'ProductController@show')->name('product.detail');   
 

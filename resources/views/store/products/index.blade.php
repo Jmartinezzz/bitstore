@@ -12,7 +12,7 @@
                 <div class="card">
                     @foreach ($placa->images as $imge)
                         <a href="{{ route('product.detail', $placa) }}">
-                            <img src="{{ asset('img/productos/' . $imge->img) }}" class="img-fluid card-img-top" style="width: 300px; height: 300px">
+                            <img src="{{ asset('img/productos/' . $imge->img) }}" class="img-fluid card-img-top" style="width: 100%; height: 300px">
                         </a>
                         
                     @break
@@ -65,7 +65,7 @@
                 <div class="card">
                      @foreach ($compo->images as $imge)
                      <a href="{{ route('product.detail', $compo) }}">
-                         <img src="{{ asset('img/productos/' . $imge->img) }}" class="img-fluid card-img-top" style="width: 300px; height: 300px">
+                         <img src="{{ asset('img/productos/' . $imge->img) }}" class="img-fluid card-img-top" style="width: 100%; height: 300px">
                      </a>                        
                     @break
                     @endforeach
