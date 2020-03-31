@@ -110,7 +110,7 @@
               if (data.mensaje = "creado") {
                   alertify.warning('Gracias por tu mensaje');
                   $('#btnContactUs').removeAttr('disabled');
-                  $('#btnContactUs').text('Registrarme');
+                  $('#btnContactUs').text('Enviar');
                   $('#contactForm')[0].reset();
               }
           },

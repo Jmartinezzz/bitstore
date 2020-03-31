@@ -70,11 +70,21 @@ Route::group(['prefix' => '/tienda'], function(){
 
   	Route::patch('/guardarDireccion', 'OrderController@saveAddress')->name('saveAddress');
 
-  	Route::delete('/eliminardelCarrito/{prod}', 'OrderController@delCart')->name('delCart');   
-  	Route::get('/carrito', 'CartController@index')->name('cart');   
+  	Route::delete('/eliminardelCarrito/{prod}', 'OrderController@delCart')->name('delCart');
+
+  	Route::get('/carrito', 'CartController@index')->name('cart'); 
+
+  	Route::post('/proccesarCompra', 'CartController@proccesarCompra')->name('procBuy');
+
+  	Route::get('/compras/historial', 'CartController@history')->name('history');
+
+  	Route::post('descargar-detalle', 'CartController@pdf')->name('cart.pdf');   
   	
 });
 
 Auth::routes();
+Route::get('/asder', function () {
+   dd(public_path());
+});
 
 // Route::get('/home', 'HomeController@index')->name('home');

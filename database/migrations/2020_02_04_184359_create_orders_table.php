@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->date('date');
             $table->integer('nOrder')->nullable();
-            $table->enum('state', ['carrito', 'pagado', 'vacio']);
+            $table->enum('state', ['carrito', 'pagado', 'vacio'])->default('vacio');
             $table->decimal('total', 8, 2);
             $table->timestamps();
 

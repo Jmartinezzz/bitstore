@@ -133,6 +133,7 @@
 {
     font-size: 0;
     line-height: 0;
+    z-index: 1000;
 
     position: absolute;
     top: 50%;

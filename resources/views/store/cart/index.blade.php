@@ -1,6 +1,41 @@
 @extends('store.partials.principal')
 @section('title',"Carrito de compras")
 @section('content')
+<style>    
+#btnSaveSign {
+    color: #fff;
+    background: #f99a0b;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    margin-top: 10px;
+}
+#signArea{
+    max-width:304px;
+    min-width: 100px;
+    margin: 15px auto;
+}
+.sign-container {
+    width: 90%;
+    margin: auto;
+}
+.sign-preview {
+    width: 150px;
+    height: 50px;
+    border: solid 1px #CFCFCF;
+    margin: 10px 5px;
+}
+.tag-ingo {
+    font-family: cursive;
+    font-size: 12px;
+    text-align: left;
+    font-style: oblique;
+}
+.center-text {
+    text-align: center;
+}
+</style>
 <!-- contenido -->
 <div class="container">
     <div class="row justify-content-center my-5">
@@ -150,13 +185,26 @@
                                                     </div>                                                       
                                                 </div>                                                        
                                                 <div class="row">
-                                                    <div class="col">
+                                                    <div class="col-md-12">
                                                         <input name="nombreTarjeta" type="text" class="form-control" placeholder="Nombre del tarjeta habiente">
-                                                    </div>                                    
+                                                    </div>            
+                                                </div>
+                                                <div class="row justify-content-center">
+                                                    <div class="col-md-6 mt-2">
+                                                        <div id="signArea" >
+                                                            <h6 class="lead">Firme aqui por favor...</h6>
+                                                            <div class="sig sigWrapper" style="height:auto;">
+                                                                <div class="typed"></div>
+                                                                <canvas class="sign-pad" id="sign-pad" height="100"
+                                                                style="min-width: 100px"></canvas>
+                                                                {{-- <button type="button" id="clearButton">limpiar</button> --}}
+                                                            </div>
+                                                        </div>
+                                                    </div>  
                                                 </div>
                                                 <div class="row mt-2 justify-content-end">
                                                     <div class="col-md-2">
-                                                        <button class="btn btn-outline-warning"><i class="fas fa-credit-card"></i> Pagar</button>                    
+                                                        <button id="btnPagar" type="button" class="btn btn-outline-warning"><i class="fas fa-credit-card"></i> Pagar</button>                    
                                                     </div>
                                                     <div class="col-md-2">
                                                         <a href="{{ route('store.index') }}" class="btn btn-outline-dark"><i class="fas fa-cancel"></i> cancelar</a>
@@ -180,6 +228,16 @@
 @endsection
 @section('scriptsFooter')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+{{-- firma --}}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<link href="{{ asset('css/jquery.signaturepad.css') }}" rel="stylesheet">
+<script src="{{ asset('js/numeric-1.2.6.min.js') }}"></script> 
+<script src="{{ asset('js/bezier.js') }}"></script>
+<script src="{{ asset('js/jquery.signaturepad.js') }}"></script> 
+
+<script type='text/javascript' src="https://github.com/niklasvh/html2canvas/releases/download/0.4.1/html2canvas.js"></script>
 <script>   
     var cantidad;
     var precio;
@@ -304,7 +362,34 @@
         })                                
     });
 
+    $('#btnPagar').on('click',function(){        
+        html2canvas([document.getElementById('sign-pad')], {
+            onrendered: function (canvas) {
+                var canvas_img_data = canvas.toDataURL('image/png');
+                var img_data = canvas_img_data.replace(/^data:image\/(png|jpg);base64,/, "");                
+                var dataform = $('#formPago').serialize();  
+                var token = $('input[name=_token]').val();              
+                //ajax call to save image inside folder
+                $.ajax({
+                    url: '{{ route('procBuy') }}',
+                    headers:{'X-CSRF-TOKEN':token},
+                    data: { img_data:img_data },
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (response) {                      
+                       if (response=="guardado") {
+                        window.location = '{{ route('history') }}';
+                       }
+                    }
+                });
+            }
+        });
+    });
+
     $(function(){
+
+        $('#signArea').signaturePad({drawOnly:true, drawBezierCurves:true, lineTop:90}); 
+
         $('[data-toggle="tooltip"]').tooltip();
 
          $('#phone').mask('0000-0000');

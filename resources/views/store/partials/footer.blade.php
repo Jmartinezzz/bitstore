@@ -143,6 +143,10 @@
                 autoplay: true,     
                 lazyLoad: 'ondemand'
             });
+
+            $('.slick-prev').css("left","5px");
+            $('.slick-next').css("right","5px");
+
         }else if (window.matchMedia("(max-width: 991px)").matches) {
             $('.carru').slick({
                 infinite: true,
@@ -203,7 +207,7 @@
                         }                                                                    
                     }
                 })
-            });
+            }); 
 
             $('#btnRegistrar').on('click',function(){              
                 data = $('#formRegistrar').serialize();             

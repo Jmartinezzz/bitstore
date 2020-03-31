@@ -13,7 +13,9 @@ class OrderController extends Controller
 {
     public function addCart(Request $request, Product $prod){
     	if($request->ajax()){
-    		$carrito = new Order;      
+            if (!Auth::check()) {
+               return redirect()->route('store.index');
+            }    		
     	
 	    	if (Order::where('user_id',Auth::user()->id)->where('state', 'carrito')->first()) {
 	    		
@@ -30,6 +32,7 @@ class OrderController extends Controller
 	    		  		
 	    		return response()->json(['mensaje' => 'agregado']);
 	    	}else{
+                $carrito = new Order;
 	    		$carrito->user_id = Auth::user()->id;    		
 	    		$carrito->date = now();
 	    		$carrito->state = 'carrito';
