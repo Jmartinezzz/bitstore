@@ -40,7 +40,13 @@ Route::get('/', function () {
 })->name('raiz');
 
 Route::get('/destinos', 'Controller@index')->name('destinos.index');
-Route::post('/destinos', 'Controller@search')->name('destinos.search'); 
+Route::post('/destinos', 'Controller@search')->name('destinos.search');
+Route::get('/landing', function(){
+	return view('store.info.landing');
+});
+Route::get('/juego-descuento', function(){
+	return view('store.info.juego');
+})->name('juego');
 
 Route::group(['prefix' => '/tienda'], function(){
 
