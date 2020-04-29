@@ -377,7 +377,8 @@
                     type: 'post',
                     dataType: 'json',
                     success: function (response) {                      
-                       if (response=="guardado") {
+                       if (response.mensaje == "guardado") { 
+                        alertify.warning('Compra realizada :)');   
                         window.location = '{{ route('history') }}';
                        }
                     }

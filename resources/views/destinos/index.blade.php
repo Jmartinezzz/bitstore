@@ -5,7 +5,7 @@
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
     <title>Buscar</title>
         {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
 
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="theme.css" type="text/css">
@@ -48,8 +48,8 @@
     }
 }
     </style>
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">

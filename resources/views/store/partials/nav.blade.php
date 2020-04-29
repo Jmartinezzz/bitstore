@@ -12,7 +12,7 @@
                     <a class="nav-link" href="{{ route('store.index') }}">Inicio <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item @yield('activeProducts')">
-                    <a class="nav-link" href="{{ route('products.index') }}">Productos</a>
+                    <a class="nav-link"  href="{{ route('products.index') }}">Productos</a>
                 </li>
                 <li class="nav-item @yield('activeMedia')">
                     <a class="nav-link" href="{{ route('store.media') }}">Videoteca</a>
@@ -34,6 +34,9 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('valoracion') }}">
+                            Valoración
+                        </a>
                         <a class="dropdown-item" href="{{ route('history') }}">
                             Historial
                         </a>

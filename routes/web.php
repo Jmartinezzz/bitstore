@@ -85,6 +85,13 @@ Route::group(['prefix' => '/tienda'], function(){
   	Route::get('/compras/historial', 'CartController@history')->name('history');
 
   	Route::post('descargar-detalle', 'CartController@pdf')->name('cart.pdf');   
+
+
+
+  	Route::get('valoracion', 'ValoracionController@index')->name('valoracion');   
+  	Route::post('sumar/{product}', 'ValoracionController@sumarLike');   
+  	Route::post('restar/{product}', 'ValoracionController@restarLike');   
+
   	
 });
 
