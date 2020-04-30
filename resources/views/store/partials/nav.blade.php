@@ -33,10 +33,7 @@
                         {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('valoracion') }}">
-                            Valoración
-                        </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">                      
                         <a class="dropdown-item" href="{{ route('history') }}">
                             Historial
                         </a>

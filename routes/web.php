@@ -48,6 +48,11 @@ Route::get('/juego-descuento', function(){
 	return view('store.info.juego');
 })->name('juego');
 
+Route::get('accesoVotacion', 'ValoracionController@falsoLogin')->name('falsoLogin');   
+Route::post('votacion/', 'ValoracionController@index')->name('votacion');   
+Route::post('votacion/sumar/{product}', 'ValoracionController@sumarLike');   
+Route::post('votacion/restar/{product}', 'ValoracionController@restarLike');  
+
 Route::group(['prefix' => '/tienda'], function(){
 
   	Route::get('/', 'StoreController@index')->name('store.index'); 
@@ -84,13 +89,7 @@ Route::group(['prefix' => '/tienda'], function(){
 
   	Route::get('/compras/historial', 'CartController@history')->name('history');
 
-  	Route::post('descargar-detalle', 'CartController@pdf')->name('cart.pdf');   
-
-
-
-  	Route::get('valoracion', 'ValoracionController@index')->name('valoracion');   
-  	Route::post('sumar/{product}', 'ValoracionController@sumarLike');   
-  	Route::post('restar/{product}', 'ValoracionController@restarLike');   
+  	Route::post('descargar-detalle', 'CartController@pdf')->name('cart.pdf');     
 
   	
 });

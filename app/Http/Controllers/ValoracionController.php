@@ -3,14 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+
 use App\Product;
 
 class ValoracionController extends Controller
 {
     public function index(){
-    	$productos = Product::take(3)->get();
+    	$request = request();
+    	$usuario = DB::table('cif')->select('cif')
+		    	->where('cif', $request->cif)
+		    	->where('pass', $request->password)->first();    
+    	if ($usuario) {
+    		$productos = Product::take(3)->get();    	
+    		return view('store.info.valoracion', ['productos' => $productos, 'usuario' => $usuario]);
+    	}else{
+    		return redirect()->back()->with('mensaje', "Error, revise sus credenciales");
+    	}
     	
-    	return view('store.info.valoracion', ['productos' => $productos]);
+    }
+
+    public function falsoLogin(){    	
+    	return view('store.info.falsoLogin');
     }
 
     // funcion para aumentar los me gusta delproducto en 1

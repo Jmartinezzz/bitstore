@@ -1,9 +1,10 @@
-@extends('store.partials.principal')
-@section('title', 'Valoración')
-@section('activeUser', 'active')
-@section('content')
+@include('store.partials.header')
+@section('title', "Votación")
+
 <main>
 	<div class="container my-4">
+		<h5 class="font-weight-normal text-right">{{  $usuario->cif }}</h5>
+		<a href="{{ route('falsoLogin') }}"><h5 class="font-weight-normal text-right">Salir</h5></a>
 		<h1 class="font-weight-normal text-center">Valora nuestros artículos</h1>
 		<div class="row">
 			@foreach ($productos as $producto)
@@ -22,25 +23,27 @@
 		            <form style="display: inline;">
 		            	<input type="hidden" class="productID" value="{{ $producto->id }}">
 		            	<button type="button"  class="btn btn-outline-warning btn-sm gusta" data-toggle="tooltip" title="Me gusta">
-		            	<i class="fas fa-thumbs-up fa-lg"></i> ({{ $producto->gusta }})
+		            	<i class="fas fa-thumbs-up fa-2x"></i> ({{ $producto->gusta }})
 		            </button>	
 		            </form>	
-		           <form style="display: inline;">
+		          {{--  <form style="display: inline;">
 		           			           	
 		           		<input type="hidden" class="prodID" value="{{ $producto->id }}">                  
 		            	<button type="button"  class="btn btn-outline-warning btn-sm noGusta" data-toggle="tooltip" title="No me gusta">
 		            	<i class="fas fa-thumbs-down fa-lg"></i> ({{ $producto->noGusta }})
 		            </button>
-		           </form>		                  
+		           </form>	 --}}	                  
 		          </div>
 	        	</div>
 	        </div>
 			@endforeach
 		</div>
+		<h4 class="font-weight-normal text-center my-5">Dale me gusta al producto que más te guste, solo cuenta un voto por usuario.</h4>
 	</div>
 </main>
-@endsection
-@section('scriptsFooter')
+
+@include('store.partials.footer')
+
 <script>
 	$(function(){
 		 $('[data-toggle="tooltip"]').tooltip();     
@@ -48,19 +51,20 @@
 
 	$('.gusta').on('click', function(){
 		id = $(this).siblings('.productID').val();		
-		if (sessionStorage.getItem('valoracion'+id) == 1) {
+		idUsuario = '{{ $usuario->cif }}'
+		if (sessionStorage.getItem('valoracion'+idUsuario) == 1) {
 			alertify.warning('Ya tenemos tu Valoración');
 		}else{
 			var token = $('input[name=_token]').val(); 
 				
 			$.post({
-				url: '/tienda/sumar/' + id,
+				url: '/votacion/sumar/' + id,
 	            headers:{'X-CSRF-TOKEN':token},            
 	            dataType:"json",                        
 	            success:function(data){     
 	                if (data.mensaje = "votado") {
 	                    alertify.warning('Gracias por tu Valoración');
-	                    sessionStorage.setItem('valoracion'+id, '1')
+	                    sessionStorage.setItem('valoracion'+idUsuario, '1')
 	                    window.location.reload();
 	                }
 	            },
@@ -87,7 +91,7 @@
 			alertify.warning('Ya tenemos tu Valoración');
 		}else{
 			$.post({
-				url: '/tienda/restar/' + id,
+				url: '/votacion/restar/' + id,
 	            headers:{'X-CSRF-TOKEN':tokens},            
 	            dataType:"json",                        
 	            success:function(data){     
@@ -111,4 +115,4 @@
 		
 	});
 </script>
-@endsection
+
