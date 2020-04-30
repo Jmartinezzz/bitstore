@@ -61,14 +61,14 @@
 				url: '/votacion/sumar/' + id,
 	            headers:{'X-CSRF-TOKEN':token},            
 	            dataType:"json",                        
-	            success:function(data){     
+	            success:function(data){ 	            	
 	                if (data.mensaje = "votado") {
 	                    alertify.warning('Gracias por tu Valoración');
 	                    sessionStorage.setItem('valoracion'+idUsuario, '1')
 	                    window.location.reload();
 	                }
 	            },
-	            error:function(data){
+	            error:function(data){	            		
 	                var errores = "¡Atención!";                        
 	                if (data.responseJSON.errors) {
 	                    $.each(data.responseJSON.errors, function(i, valor){

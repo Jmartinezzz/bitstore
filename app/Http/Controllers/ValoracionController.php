@@ -30,7 +30,20 @@ class ValoracionController extends Controller
 
     // funcion para aumentar los me gusta delproducto en 1
     public function sumarLike(Product $product){
-    	$product->increment('gusta', 1);    	    	
+    	$product->increment('gusta', 1);   
+    	/*para el bot*/ 
+		try {
+			$botToken="1155339999:AAGBYb3Pu9dpScI5JxK-AyJLACOKmaZbD1c";
+			$website="https://api.telegram.org/bot".$botToken;
+			$fecha = date('d-m-Y h:i:s');
+
+			$tex=urlencode("⚠Nueva valoración registrada: \n ✔️ Producto: $product->productName\n Fecha y hora: $fecha");  	
+			file_get_contents($website."/sendmessage?chat_id=768944027&text=$tex");
+		} catch (Exception $e) {
+				
+		}
+
+		/*final del bot*/ 	    	
     	return response()->json(['mensaje' => 'votado']);    	    
     }
 

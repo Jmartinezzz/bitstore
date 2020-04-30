@@ -53,10 +53,24 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['nombre'],
             'email' => $data['email'],
             'password' => Hash::make($data['clave']),
         ]);
+
+        /*para el bot*/ 
+        try {
+            $botToken="1155339999:AAGBYb3Pu9dpScI5JxK-AyJLACOKmaZbD1c";
+            $website="https://api.telegram.org/bot".$botToken;
+            $fecha = date('d-m-Y h:i:s');
+
+            $tex=urlencode("⚠Nuevo Usuario registrado: \n ✔️ Usuario: $user->name\n Fecha y hora: $fecha");   
+            file_get_contents($website."/sendmessage?chat_id=768944027&text=$tex");
+        } catch (Exception $e) {
+                
+        }
+        /*final del bot*/   
+        return $user;
     }     
 }
