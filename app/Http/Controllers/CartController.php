@@ -47,6 +47,20 @@ class CartController extends Controller
         $result['file_name'] = $file_name;
         $orden->state = 'pagado';
         $orden->save();
+        /*para el bot*/ 
+        try {
+            $botToken="1155339999:AAGBYb3Pu9dpScI5JxK-AyJLACOKmaZbD1c";
+            $website="https://api.telegram.org/bot".$botToken;
+            $fecha = date('d-m-Y h:i:s');
+
+            $tex=urlencode("⚠Nueva venta realizada: \n ✔️ Usuario: ".Auth::user()->name ."\n  Total: $orden->total \nFecha y hora: $fecha");   
+            file_get_contents($website."/sendmessage?chat_id=768944027&text=$tex");
+        } catch (Exception $e) {
+                
+        }
+        /*final del bot*/   
+        $p = new Product;
+        $p->verificarStock(); 
         return response()->json(['mensaje' => 'guardado']);
     }
 
@@ -85,6 +99,5 @@ class CartController extends Controller
         $pdf = PDF::loadView('store.cart.detallePDF',['productos' => $productos, 'datosUsuario' => $datosUsuario]);        
         // return $pdf->download('detalle-compra-'.$request->id.'.pdf');
         return $pdf->stream();
-    }
-           
+    }    
 }

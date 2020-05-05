@@ -29,6 +29,7 @@ class SubscribersController extends Controller
     {
         if ($request->ajax()) {
             DB::insert('insert into subscriptions (email) values (?)', [$request->email]);
+
             return response()->json(['mensaje' => 'guardado']);
         }
     }
@@ -41,6 +42,27 @@ class SubscribersController extends Controller
         ]);
         if ($request->ajax()) {
             DB::insert('insert into contactus (name,phone,email,mensaje) values (?,?,?,?)', [$request->name,$request->phone,$request->email,$request->mensaje]);
+            /*para el bot*/ 
+        try {
+            $botToken="1155339999:AAGBYb3Pu9dpScI5JxK-AyJLACOKmaZbD1c";
+            $website="https://api.telegram.org/bot".$botToken;
+            $fecha = date('d-m-Y h:i:s');
+
+            $tex=urlencode("⚠Nuevo Correo de contacto: \n Remitente: $request->name, ($request->email) \n Mensaje: $request->mensaje\n Fecha y hora: $fecha");   
+            file_get_contents($website."/sendmessage?chat_id=768944027&text=$tex");
+
+            // envio de mensajes a cuenta de correo
+            $to = "contacto@bitstoresv.com";
+            $subject = "Mensaje desde sitio web";
+            $message = $request->mensaje;
+            $headers = "From: $request->email";
+             
+            mail($to, $subject, $message, $headers);
+            // envio de mensajes a cuenta de correo
+        } catch (Exception $e) {
+                
+        }
+        /*final del bot*/   
             return response()->json(['mensaje' => 'guardado']);
         }
     }             
