@@ -54,7 +54,7 @@ class CartController extends Controller
             $fecha = date('d-m-Y h:i:s');
 
             $tex=urlencode("⚠Nueva venta realizada: \n ✔️ Usuario: ".Auth::user()->name ."\n  Total: $orden->total \nFecha y hora: $fecha");   
-            file_get_contents($website."/sendmessage?chat_id=768944027&text=$tex");
+            file_get_contents($website."/sendmessage?chat_id=768944027&text=$tex");              
         } catch (Exception $e) {
                 
         }

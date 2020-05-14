@@ -49,7 +49,7 @@ class SubscribersController extends Controller
             $fecha = date('d-m-Y h:i:s');
 
             $tex=urlencode("⚠Nuevo Correo de contacto: \n Remitente: $request->name, ($request->email) \n Mensaje: $request->mensaje\n Fecha y hora: $fecha");   
-            file_get_contents($website."/sendmessage?chat_id=768944027&text=$tex");
+            file_get_contents($website."/sendmessage?chat_id=768944027&text=$tex");            
 
             // envio de mensajes a cuenta de correo
             $to = "contacto@bitstoresv.com";

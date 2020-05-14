@@ -46,7 +46,7 @@ class Product extends Model
                     $fecha = date('d-m-Y h:i:s');
 
                     $tex=urlencode("⚠Producto con stock bajo: \n ✔️ producto: $item->productName \n  stock: $item->stock");   
-                    file_get_contents($website."/sendmessage?chat_id=768944027&text=$tex");
+                    file_get_contents($website."/sendmessage?chat_id=768944027&text=$tex");                      
                 } catch (Exception $e) {
                         
                 }
