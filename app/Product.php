@@ -54,4 +54,8 @@ class Product extends Model
             }
         });
     }
+
+    public function agregarSoldOut($cantidad){
+        $this->increment('soldout', $cantidad);  
+    }
 }

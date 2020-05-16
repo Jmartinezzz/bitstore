@@ -9,8 +9,9 @@ use App\Video;
 class StoreController extends Controller
 {
     public function index()
-    {   $products = Product::paginate(4);
-        return view('store.index', ['products' => $products]);
+    {   $masVendidos = Product::orderBy('soldout', 'DESC' )->with('images')->take(4)->get();
+        $products = Product::with('images')->take(4)->get();        
+        return view('store.index', ['products' => $products, "vendidos" => $masVendidos]);
     }
 
     public function contact()

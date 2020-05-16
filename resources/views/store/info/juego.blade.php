@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" style="background-color: #1D1C1C" >
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -9,9 +9,17 @@
   <link rel="stylesheet" href="{{ asset('store/css/style-tiles.css') }}">  
 
 </head>
-<body>
+<body style="background-color: #1D1C1C">
 <!-- partial:index.partial.html -->
 <div class="container">
+   <div class="row justify-content-center mb-3">
+       <div class="col-md-6">
+           <a href="{{ route("store.index") }}">
+              <img class="img-fluid" src="{{ asset('img/logos/logo4.png') }}" alt="">
+           </a>
+           <figcaption class="figure-caption text-center">A jugar...</figcaption>
+       </div>
+   </div>
   <div class="heading">
     <h1 class="title">2048</h1>
     <div class="score-container">0</div>
@@ -64,7 +72,7 @@
   <hr>  
   <div class="row justify-content-center">
     <div class="col-7">
-      <a href="{{ route('store.index') }}"  class="btn btn-outline-warning " style="text-decoration-line: none;"><i class="fas fa-store fa-lg"></i> Regresar a la tienda</a>
+      <a href="{{ route('store.index') }}"  class="btn btn-warning " style="text-decoration-line: none;"><i class="fas fa-store fa-lg"></i> Regresar a la tienda</a>
     </div>
   </div>
 </div>

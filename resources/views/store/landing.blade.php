@@ -7,7 +7,7 @@
     <title>Bitstore</title>        
    <link rel="stylesheet" href="{{ asset('store/css/plantilla.css') }}">  
 </head>
-<body>
+<body style="background-color: #030303">
 	<header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a href="{{ route('raiz') }}">
@@ -217,6 +217,24 @@
 	      </div>
 	    </div>
 	</div>
+    {{-- landign juego --}}
+    <div  class="container mb-5 pb-5 mt-4">
+        <div class="row justify-content-center pt-5 mb-3">
+            <div class="col-md-6">
+                <img class="img-fluid" src="{{ asset('img/logos/logo4.png') }}" alt="">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-9 text-center">
+                <p class="h1 font-weight-normal text-white text-break">Participa en el reto que tenemos para tí</p>
+                <p class="text-white">Completa el reto 2048, comparte una captura con el reto completado en nuestra fanpage y podras obtener un descuento incríble en tu primera compra.</p>
+                <a href="{{ route('juego') }}" target="_blank" class="btn btn-lg btn-warning mt-4">¡Jugar ahora!</a>
+                <div class="w-100"></div>
+                <img class="mt-3 img-fluid" src="{{ asset('img/locales/m2.svg') }}" style="height: 150px" >
+            </div>
+        </div>         
+        <hr class="mt-5 bg-white">        
+    </div>
   
   
     {{-- imagenes --}}

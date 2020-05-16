@@ -47,6 +47,12 @@ class CartController extends Controller
         $result['file_name'] = $file_name;
         $orden->state = 'pagado';
         $orden->save();
+
+        // agregar soldout a cada producto
+        foreach ($orden->products as $product) {
+            $product->agregarSoldOut($product->pivot->quantity);
+        }
+
         /*para el bot*/ 
         try {
             $botToken="1155339999:AAGBYb3Pu9dpScI5JxK-AyJLACOKmaZbD1c";

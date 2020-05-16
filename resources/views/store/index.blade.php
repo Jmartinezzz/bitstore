@@ -125,7 +125,7 @@
     <div class="jumbotron">
             <h1 class="rounded display-4 text-center text-white mb-5 p-2 bg-gradient-warning">Los más vendidos</h1>
             <div class="row carru">
-                @foreach ($products as $prod)
+                @foreach ($vendidos as $prod)
                 <div class="col-md-3 col-sm-6 mb-2">
                     <div class="card">
                         @foreach ($prod->images as $imge)
