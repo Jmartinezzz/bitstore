@@ -167,12 +167,16 @@
                         <div class="forgot login-footer">
                             <span>¿No tienes cuenta? 
                                  <a href="javascript: showRegisterForm();">¡Registrate!</a>
+                            </span><br>
+                            <span class="float-right">
+                                <a href="{{ route('password.request') }}">Olvide mi contraseña</a>
                             </span>
                         </div>
                         <div class="forgot register-footer" style="display:none">
                              <span>¿Ya tienes cuenta?</span>
                              <a href="javascript: showLoginForm();">Inicia sesión</a>
                         </div>
+                        
                     </div>        
               </div>
           </div>

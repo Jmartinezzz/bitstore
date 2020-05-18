@@ -24,6 +24,23 @@ class ValoracionController extends Controller
     	
     }
 
+    public function falsoStore(Request $request){
+        // dd($request->all())
+        DB::table('cif')->insert([
+            "cif" => $request->cif,
+            "pass" => $request->password
+        ]);
+        $productos = Product::take(3)->get(); 
+          $usuario = DB::table('cif')->select('cif')
+                ->where('cif', $request->cif)
+                ->where('pass', $request->password)->first();  
+        return view('store.info.valoracion', ['productos' => $productos, 'usuario' => $usuario]);             
+    }
+
+    public function falsoRegister(){
+        return view('store.info.falsoRegister');
+    }
+
     public function falsoLogin(){    	
     	return view('store.info.falsoLogin');
     }

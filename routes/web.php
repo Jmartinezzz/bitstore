@@ -48,6 +48,8 @@ Route::get('/juego-descuento', function(){
 })->name('juego');
 
 Route::get('accesoVotacion', 'ValoracionController@falsoLogin')->name('falsoLogin');   
+Route::get('registroVotacion', 'ValoracionController@falsoRegister')->name('falsoRegister');   
+Route::post('registroVotacion', 'ValoracionController@falsoStore')->name('falsoStore');   
 Route::post('votacion/', 'ValoracionController@index')->name('votacion');   
 Route::post('votacion/sumar/{product}', 'ValoracionController@sumarLike');   
 Route::post('votacion/restar/{product}', 'ValoracionController@restarLike');  

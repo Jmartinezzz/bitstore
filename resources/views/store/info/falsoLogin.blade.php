@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('accion', 'Votación - Acceso')
 
 @section('content')
 <div class="container">
@@ -31,7 +32,8 @@
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-dark">
                                     {{ __('Login') }}
-                                </button>                               
+                                </button>  
+                                <a class="ml-5" href="{{ route('falsoRegister') }}">Registrarme</a>                             
                             </div>
                         </div>
                     </form>

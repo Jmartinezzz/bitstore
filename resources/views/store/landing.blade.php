@@ -149,11 +149,17 @@
                             <span>¿No tienes cuenta? 
                                  <a href="javascript: showRegisterForm();">¡Registrate!</a>
                             </span>
+                            
+                            <span class="float-left">
+                                <a href="{{ route('password.request') }}">Olvide mi contraseña</a>
+                            </span>
                         </div>
                         <div class="forgot register-footer" >
                              <span>¿Ya tienes cuenta?</span>
                              <a href="javascript: showLoginForm();">Inicia sesión</a>
+                             
                         </div>
+                       
                     </div>        
               </div>
           </div>
@@ -167,6 +173,7 @@
 	      <div class="carousel-caption d-block" style="top: 40%">
 	        <h5 class="display-4 display-md-1 text-break" style="background-color: rgba(0,0,0,0.8);border-radius: 4px">SOMOS BITSTORE</h5>
 	        <p class="h3" style="background-color: rgba(0,0,0,0.8);border-radius: 4px; padding: 10px">La tienda de placas arduino y sensores que estabas esperando para poder llevar a cabo tus proyectos de electrónica y robótica.</p>
+            <a href="{{ route('falsoLogin') }}" class="btn btn-warning">Valorar Productos</a>
 	        
 	      </div>
 	    </div>
