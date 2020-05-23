@@ -8,6 +8,7 @@ use Auth;
 use App\Order;
 use App\Product;
 use App\User;
+use Illuminate\Support\Facades\Mail;
 
 class CartController extends Controller
 {    
@@ -48,9 +49,64 @@ class CartController extends Controller
         $orden->state = 'pagado';
         $orden->save();
 
+        //crear pdf de la orden
+       $productos = $orden->where('user_id',Auth::user()->id)->where('state', 'pagado')
+            ->where('id', $orden->id)
+            ->orderBy('id', 'desc')
+            ->first();
+        $datosUsuario = User::find(Auth::user()->id);          
+        $pdf = PDF::loadView('store.cart.detallePDF',['productos' => $productos, 'datosUsuario' => $datosUsuario]);        
+        $pdf->save(public_path(). '/pdf/'.Auth::user()->id . '.pdf');
+
+        // enviar pdf a correo
+        try{
+            $to = Auth::user()->email;
+            $from = "contacto@bitstoresv.com";
+            $subject = "Detalle de Compra";
+
+            $message = "Hola " . Auth::user()->name . " adjuntamos tu detalle de compra, saludos.";
+            $separator = md5(time());
+            $eol = PHP_EOL;
+            $filename = "pedido_" . Auth::user()->name . ".pdf";
+            $fn = public_path() . "/pdf/" . Auth::user()->id . ".pdf";
+            $fileSize   = filesize($fn);
+            $handle     = fopen($fn, "r");
+            $content    = fread($handle, $fileSize);
+            $attachment = chunk_split(base64_encode($content));
+
+            $headers = "From: " . $from . $eol;
+            $headers .= "MIME-Version: 1.0" . $eol;
+            $headers .= "Content-Type: multipart/mixed; boundary=\"" . $separator . "\"" . $eol . $eol;
+
+            $body = '';
+
+            $body .= "Content-Transfer-Encoding: 7bit" . $eol;
+            $body .= "This is a MIME encoded message." . $eol; //had one more .$eol
+
+
+            $body .= "--" . $separator . $eol;
+            $body .= "Content-Type: text/html; charset=\"iso-8859-1\"" . $eol;
+            $body .= "Content-Transfer-Encoding: 8bit" . $eol . $eol;
+            $body .= $message . $eol;
+
+
+            $body .= "--" . $separator . $eol;
+            $body .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"" . $eol;
+            $body .= "Content-Transfer-Encoding: base64" . $eol;
+            $body .= "Content-Disposition: attachment" . $eol . $eol;
+            $body .= $attachment . $eol;
+            $body .= "--" . $separator . "--";
+
+            mail($to, $subject, $body, $headers);
+        }catch (Exception $e) {
+                
+        }
+         //fin crear pdf de la orden
+
         // agregar soldout a cada producto
-        foreach ($orden->products as $product) {
+        foreach($orden->products as $product) {
             $product->agregarSoldOut($product->pivot->quantity);
+            $product->restarStock($product->pivot->quantity);
         }
 
         /*para el bot*/ 
@@ -106,4 +162,5 @@ class CartController extends Controller
         // return $pdf->download('detalle-compra-'.$request->id.'.pdf');
         return $pdf->stream();
     }    
+
 }

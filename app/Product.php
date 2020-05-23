@@ -58,4 +58,8 @@ class Product extends Model
     public function agregarSoldOut($cantidad){
         $this->increment('soldout', $cantidad);  
     }
+
+    public function restarStock($cantidad){
+        $this->decrement('stock', $cantidad);  
+    }
 }
