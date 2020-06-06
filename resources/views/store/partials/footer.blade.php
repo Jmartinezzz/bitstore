@@ -46,6 +46,20 @@
                 </div>
             </div>
         </div>
+        {{-- formas de pago --}}
+        <div class="row justify-content-center mt-3">
+            <div class="col-12">
+                <p class="h5 lead text-center">Formas de pago:</p>
+            </div>
+            <div class="col-md-2 text-right">
+                <img width="90px" src="{{ asset('img/locales/pago1.jpg') }}" alt=""><br>
+                <small class="text-left">Pago por paypal</small>
+            </div>
+            <div class="col-md-2">
+                <img width="90px" src="{{ asset('img/locales/pago2.jpg') }}" alt=""><br>
+                <small>Abono a cuenta</small>
+            </div>
+        </div>
     </div>
     <!-- Copyright -->
     <hr class="bg-white">
@@ -58,6 +72,7 @@
 </main>
     <script src="{{ asset('store/js/plantilla.js') }}"></script>
     <script>
+        
         var data; 
         var token;
         var route;        
@@ -191,6 +206,7 @@
                     },
                     success:function(data){     
                         if (data.mensaje = "existe") {
+                            alertify.set('notifier','position', 'top-right');
                             alertify.warning('Acceso correcto...');
                             window.location.reload();
                         }

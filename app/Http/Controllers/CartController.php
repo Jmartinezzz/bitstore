@@ -97,9 +97,9 @@ class CartController extends Controller
             $body .= $attachment . $eol;
             $body .= "--" . $separator . "--";
 
-            mail($to, $subject, $body, $headers);
+            // mail($to, $subject, $body, $headers);
         }catch (Exception $e) {
-                
+            $err = $e;
         }
          //fin crear pdf de la orden
 
@@ -118,7 +118,7 @@ class CartController extends Controller
             $tex=urlencode("⚠Nueva venta realizada: \n ✔️ Usuario: ".Auth::user()->name ."\n  Total: $orden->total \nFecha y hora: $fecha");   
             file_get_contents($website."/sendmessage?chat_id=768944027&text=$tex");              
         } catch (Exception $e) {
-                
+                 $err = $e;
         }
         /*final del bot*/   
         $p = new Product;

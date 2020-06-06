@@ -1,7 +1,7 @@
 @extends('store.partials.principal')
 @section('title',"Carrito de compras")
 @section('content')
-<style>    
+<style>  
 #btnSaveSign {
     color: #fff;
     background: #f99a0b;
@@ -37,6 +37,21 @@
 }
 </style>
 <!-- contenido -->
+<!-- Modal -->
+<div class="modal fade" id="modalAbono" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+        <img class="img-fluid h-100 w-100"  src="{{ asset('img/locales/abono.jpg') }}" alt="">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button id="btnPagarCuentaFin" type="button" class="btn btn-warning">Aceptar y continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container">
     <div class="row justify-content-center my-5">
         <div class="col-md-10 ">
@@ -173,7 +188,7 @@
                                         <div class="col-12">
                                             <form id="formPago">
                                                 @csrf
-                                                <div class="row">
+                                               {{--  <div class="row">
                                                     <div class="col">
                                                         <input name="ntarjeta" id="ntarjeta" type="text" class="form-control" placeholder="Número de tarjeta">
                                                     </div>
@@ -188,7 +203,7 @@
                                                     <div class="col-md-12">
                                                         <input name="nombreTarjeta" type="text" class="form-control" placeholder="Nombre del tarjeta habiente">
                                                     </div>            
-                                                </div>
+                                                </div> --}}
                                                 <div class="row justify-content-center">
                                                     <div class="col-md-6 mt-2">
                                                         <div id="signArea" >
@@ -202,12 +217,18 @@
                                                         </div>
                                                     </div>  
                                                 </div>
-                                                <div class="row mt-2 justify-content-end">
-                                                    <div class="col-md-2">
-                                                        <button id="btnPagar" type="button" class="btn btn-outline-warning"><i class="fas fa-credit-card"></i> Pagar</button>                    
+                                                <div class="row mt-3 justify-content-end">
+                                                    <div class="col-12">
+                                                        <p class="h5 lead mb-4">¿Como prefieres pagar?</p>
+                                                    </div>
+                                                    <div class="col-md-3">                                                   
+                                                        <div id="paypal-button-container"></div>                  
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <a href="{{ route('store.index') }}" class="btn btn-outline-dark"><i class="fas fa-cancel"></i> cancelar</a>
+                                                           <button id="btnPagarCuenta" data-target="#modalAbono" type="button" class="btn btn-warning btn-sm">Abono a cuenta</button>  
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <a href="{{ route('store.index') }}" class="btn btn-outline-dark btn-sm"><i class="fas fa-cancel"></i> cancelar</a>
                                                     </div>
                                                 </div>
                                             </form>
@@ -238,6 +259,7 @@
 <script src="{{ asset('js/jquery.signaturepad.js') }}"></script> 
 
 <script type='text/javascript' src="https://github.com/niklasvh/html2canvas/releases/download/0.4.1/html2canvas.js"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AXRNXKcWxh4NfekDUGFVrTdifAMmVJJxSP7LX6og1j3As_Hty4UxMaaWeDVOnPknxJgck4kLM9Z1Xy6o&currency=USD"></script>
 <script>   
     var cantidad;
     var precio;
@@ -362,7 +384,7 @@
         })                                
     });
 
-    $('#btnPagar').on('click',function(){        
+    function guardarPago(){        
         html2canvas([document.getElementById('sign-pad')], {
             onrendered: function (canvas) {
                 var canvas_img_data = canvas.toDataURL('image/png');
@@ -375,19 +397,55 @@
                     headers:{'X-CSRF-TOKEN':token},
                     data: { img_data:img_data },
                     type: 'post',
-                    dataType: 'json',
+                    dataType: 'json',                   
                     success: function (response) {                      
                        if (response.mensaje == "guardado") { 
-                        alertify.warning('Compra realizada :)');   
+                        alertify.warning('Compra realizada <br> Revisa tu email');   
                         window.location = '{{ route('history') }}';
                        }
                     }
                 });
             }
         });
+    };
+
+    $('#btnPagarCuenta').on('click', function(){
+        $('#modalAbono').modal('show');
+    });
+
+    $('#btnPagarCuentaFin').on('click', function(){
+        $('#modalAbono').modal('hide');
+        alertify.warning('Procesando...');
     });
 
     $(function(){
+        paypal.Buttons({
+            
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: $('#totalh').val()
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // Show a success message to the buyer
+                    alertify.warning('Procesando...');
+                    guardarPago();
+                });
+            },
+             style: {
+                layout: 'horizontal'
+            }    
+
+            
+        }).render('#paypal-button-container');
 
         $('#signArea').signaturePad({drawOnly:true, drawBezierCurves:true, lineTop:90}); 
 

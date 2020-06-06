@@ -81,6 +81,7 @@
 @section('scriptsFooter')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
   <script>
+    
     if (window.matchMedia("(max-width: 440px)").matches) {            
             $('#mapa').width('380px');
     }
