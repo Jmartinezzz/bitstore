@@ -34,7 +34,7 @@
                             <div class="col-3">
                                <form class="formAddCarrito" method="post" action="{{ route('addCart', $placa->id) }}">
                                     @csrf
-                                    <button type="button" class="btnAddCarrito btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x "></i></button>  
+                                    <button type="button" class="btnAddCarrito btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="bottom" title="Agregar al carrito"><i class="fas fa-shopping-cart fa-2x"></i></button>  
                                </form>                      
                             </div>
                             <div class="col-3">
@@ -125,7 +125,7 @@
                 headers:{'X-CSRF-TOKEN':token},
                 type: 'POST',
                 dataType:"json",                
-                success:function(data){     
+                success:function(data){
                     if (data.mensaje == 'existe') {
                         alertify.warning('Producto Existente en el carrito');
                     }else if (data.mensaje == 'agregado') {
@@ -134,7 +134,6 @@
                 
                 },
                 error:function(data){
-                    console.log(data);
                     alertify.error('Se produjo un error');                                                                    
                 }
             })

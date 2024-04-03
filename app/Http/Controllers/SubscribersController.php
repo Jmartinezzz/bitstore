@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\SubscribersRequest;
 use Illuminate\Support\Facades\DB;
+use App\Traits\Bot;
 
 class SubscribersController extends Controller
 {
+    use Bot;
     /**
      * Display a listing of the resource.
      *
@@ -42,15 +44,10 @@ class SubscribersController extends Controller
         ]);
         if ($request->ajax()) {
             DB::insert('insert into contactus (name,phone,email,mensaje) values (?,?,?,?)', [$request->name,$request->phone,$request->email,$request->mensaje]);
-            /*para el bot*/ 
+
+            $botMsgContent = "⚠Nuevo Correo de contacto: \n Remitente: $request->name, ($request->email) \n Mensaje: $request->mensaje\n Fecha y hora: date('d-m-Y h:i:s')";
+            $this->sendInteraction($botMsgContent);
         try {
-            $botToken="1155339999:AAGBYb3Pu9dpScI5JxK-AyJLACOKmaZbD1c";
-            $website="https://api.telegram.org/bot".$botToken;
-            $fecha = date('d-m-Y h:i:s');
-
-            $tex=urlencode("⚠Nuevo Correo de contacto: \n Remitente: $request->name, ($request->email) \n Mensaje: $request->mensaje\n Fecha y hora: $fecha");   
-            file_get_contents($website."/sendmessage?chat_id=768944027&text=$tex");            
-
             // envio de mensajes a cuenta de correo
             $to = "contacto@bitstoresv.com";
             $subject = "Mensaje desde sitio web";
@@ -65,15 +62,5 @@ class SubscribersController extends Controller
         /*final del bot*/   
             return response()->json(['mensaje' => 'guardado']);
         }
-    }             
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

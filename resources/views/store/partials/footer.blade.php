@@ -187,7 +187,7 @@
             var token = $('input[name=_token]').val();
             var route = $(this).parents('form:first').attr('action'); 
 
-            $('#btnLogin').on('click',function(){              
+            $('#btnLogin').on('click',function(){    
                 data = $('#formLogin').serialize();             
                 token = $('input[name=_token]').val();
                 route = $(this).parents('form:first').attr('action');               
@@ -204,7 +204,7 @@
                         
                         $('#btnLogin').attr('disabled', 'disabled');
                     },
-                    success:function(data){     
+                    success:function(data){
                         if (data.mensaje = "existe") {
                             alertify.set('notifier','position', 'top-right');
                             alertify.warning('Acceso correcto...');
@@ -213,6 +213,7 @@
                     },
                     error:function(data){
                         var errores = "¡Atención!";                        
+                        console.log(data)
                         if (data.responseJSON.errors) {
                             $.each(data.responseJSON.errors, function(i, valor){
                                 errores += valor;

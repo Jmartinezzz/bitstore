@@ -37,14 +37,7 @@ class SupplierController extends Controller
      */
     public function store(supplierRequest $request)
     {
-        $supp = new Supplier;
-        $supp->companyName = $request->companyName;
-        $supp->contactName = $request->contactName;
-        $supp->title = $request->title;
-        $supp->email = $request->email;
-        $supp->phone = $request->phone;
-        $supp->save();
-
+        Supplier::create($request->all());
         return redirect()->route('suppliers.index');
     }
 

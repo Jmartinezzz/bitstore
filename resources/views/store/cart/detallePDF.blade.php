@@ -17,7 +17,7 @@
     <div class="row text-center mb-3">
         <div class="card-header bg-warning text-white mb-2">
             <h4>Detalle de pedido</h4>
-            <h5>Cliente: {{ $datosUsuario->name ." ". $datosUsuario->lastName}}</h4>
+            <h5>Cliente: {{ $productos->user->name ." ". $productos->user->lastName}}</h4>
             <h6>Orden: {{ $productos->id }}</h6>
         </div>
     </div>
@@ -41,7 +41,7 @@
         <tfoot>
             <tr>
                 <th colspan="2" class="text-left">
-                    Firma.<img style="width: 200px" src="img/firmas/{{ $datosUsuario->id }}.png" alt="">
+                    Firma.<img style="width: 200px" src="img/firmas/{{ $productos->user->id }}.png" alt="">
                 </th>
                 <th colspan="2" class="text-right">Total: ${{ $productos->total }}</th>
             </tr>
