@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::select('id', 'name', 'description', 'created_at')->get();
         return view('admin.categories.index', ['categories' => $categories]);
     }
 
@@ -37,11 +37,7 @@ class CategoryController extends Controller
      */
     public function store(categoryRequest $request)
     {
-        $category = new Category;
-        $category->name = $request->name;
-        $category->description = $request->description;
-        
-        $category->save();
+        Category::create($request->all());
         return redirect()->route('categories.index');
     }
 

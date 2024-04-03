@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Bot;
 
 class Product extends Model
 {
+    use Bot;
     protected $fillable = [
     	'category_id', 'supplier_id', 'productName', 'stock', 'purchasePrice', 'salePrice', 'description', 'photo', 
     ];
@@ -39,18 +41,8 @@ class Product extends Model
     {
         $this->each(function ($item, $key) {
             if ($item->stock <= 10) {
-                /*para el bot*/ 
-                try {
-                    $botToken="1155339999:AAGBYb3Pu9dpScI5JxK-AyJLACOKmaZbD1c";
-                    $website="https://api.telegram.org/bot".$botToken;
-                    $fecha = date('d-m-Y h:i:s');
-
-                    $tex=urlencode("⚠Producto con stock bajo: \n ✔️ producto: $item->productName \n  stock: $item->stock");   
-                    file_get_contents($website."/sendmessage?chat_id=768944027&text=$tex");                      
-                } catch (Exception $e) {
-                        
-                }
-                /*final del bot*/    
+                $botMsgContent = "⚠Producto con stock bajo: \n ✔️ producto: $item->productName \n  stock: $item->stock";
+                $this->sendInteraction($botMsgContent);
             }
         });
     }
@@ -61,5 +53,12 @@ class Product extends Model
 
     public function restarStock($cantidad){
         $this->decrement('stock', $cantidad);  
+    }
+
+    public function scopeSearch($query, $request) {
+        return $query->where('productName','like', "%$request->buscar%")
+                ->when($request->categoria != 0, function ($q) use ($request){
+                    return $q->where('category_id', $request->categoria);
+                });
     }
 }

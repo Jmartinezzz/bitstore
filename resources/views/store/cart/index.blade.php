@@ -175,7 +175,7 @@
                                     <div class="row justify-content-end">
                                         <div class="col-md-2">
                                              <div class="form-group">                        
-                                                    <button type="button" id="btnGuardar2" class="btn btn-sm btn-warning">Guardar y continuar</button>
+                                                    <button type="button" id="btnGuardar2" class="btn btn-sm btn-warning">Guardar y continuarD</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -286,19 +286,17 @@
     });
 
     $('.eliminarDelCart').on('click', function(){ 
-        // $(this).parents('form:first').submit();
-        var route = $(this).parents('form').attr('action'); 
+        let route = $(this).parents('form').attr('action'); 
         alertify.confirm('Eliminar del carrito', '¿Estàs seguro de eliminar del carrito?', function(){ 
                       
             var token = $('input[name=_token]').val();            
             $.ajax({
-                url: route,
+                url: route + '?userId={{ $datosUsuario->id }}',
                 headers:{'X-CSRF-TOKEN':token},
                 type: 'delete',
                 dataType:"json",
                
                 success:function(data){ 
-                 console.log(data);    
                     if (data.mensaje == 'eliminado') {
                         setTimeout(location.reload(), 1000);
                         alertify.warning('Se eliminó del carrito');                       
@@ -307,11 +305,9 @@
                     }
                 },
                 error:function(data){
-                    console.log(data);                    
                     alertify.success('Se produjo un error');                                                                    
                 }
             })
-             // $(this).parents('form:first').submit();
         }, function(){ 
     
         });  
@@ -334,17 +330,16 @@
         });
 
         total = $('#totalh').val();
-        datos = {'cantidad' : cantidad, 'subTotal' : subTotal, 'total' : total };
+        datos = {'cantidad' : cantidad, 'subTotal' : subTotal };
 
         $.ajax({
-            
-            url:'{{ route('saveCart', $productos) }}',                 
+            url:'{{ route('saveCart', $productos) }}',
             
             headers:{'X-CSRF-TOKEN':token},
             type: 'POST',
             dataType:"json",
             data:datos,
-            success:function(data){                    
+            success:function(data){
                 if (data.mensaje == "guardado") {
                     alertify.warning('Carrito guardado');
                     $('body, html').animate({
@@ -355,21 +350,20 @@
             
             },
             error:function(data){
-                console.log(data);
                 alertify.success('Se produjo un error');                                                                    
             }
         })                                
     });
 
-    $('#btnGuardar2').on('click', function(e){        
+    $('#btnGuardar2').on('click', function(e){     
         var token = $('input[name=_token]').val();
-        // var route = $(this).parents('form').attr('action');
-        datos = $('#formDireccion').serialize();        
+        datos = $('#formDireccion').serialize();
+        datos += '&userId={{ $datosUsuario->id }}';
 
         $.ajax({            
-            url:'{{ route('saveAddress') }}',                 
+            url:'{{ route('saveAddress') }}',         
             headers:{'X-CSRF-TOKEN':token},
-            type: 'POST',
+            type: 'PATCH',
             dataType:"json",
             data:datos,
             success:function(data){     

@@ -57,11 +57,7 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        $products = Product::where('productName','like', '%' . $request->buscar . '%')
-                            ->get();
-        if ($request->categoria != 0) {            
-            $products = Product::where('productName','like', '%' . $request->buscar . '%')->where('category_id', $request->categoria)->get();
-        }       
+        $products = Product::search($request)->get();
         return view('store.products.search', ['products' => $products]);
     }
 
