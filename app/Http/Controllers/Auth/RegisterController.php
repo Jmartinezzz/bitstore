@@ -1,16 +1,18 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Traits\Bot;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
-{  
-
+{
+    use Bot;
     use RegistersUsers;
 
     /**
@@ -51,16 +53,21 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function register(Request $request)
     {
+        $this->validator($request->all())->validate();
         $user = User::create([
-            'name' => $data['nombre'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['clave']),
+            'name' => $request->nombre,
+            'email' => $request->email,
+            'password' => Hash::make($request->clave),
         ]);
 
-        $botMsgContent = "⚠Nuevo Usuario registrado: \n ✔️ Usuario: $user->name\n Fecha y hora: date('d-m-Y h:i:s')";
+        $botMsgContent = "⚠Nuevo Usuario registrado: \n ✔️ Usuario: $user->name\n Fecha y hora: " . date('d-m-Y h:i:s');
         $this->sendInteraction($botMsgContent);
-        return $user;
-    }     
+
+        $this->guard()->login($user);
+
+        return response()->json(['mensaje' => 'creado']);
+    }
+
 }

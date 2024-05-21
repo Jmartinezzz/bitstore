@@ -69,6 +69,76 @@ function openRegisterModal(){
     
 }
 
+function storeUser(data, token, route) {
+    $.ajax({
+        url: route,
+        headers:{'X-CSRF-TOKEN':token},
+        type: 'POST',
+        dataType:"json",
+        data:data,
+        beforeSend: function( xhr ) { 
+            $('#btnRegistrar').text('Verificando ');
+            $('#btnRegistrar').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+            
+            $('#btnRegistrar').attr('disabled', 'disabled');
+        },
+        success:function(data){     
+            if (data.mensaje = "creado") {
+                $('#btnRegistrar').text('Redirigiendo');
+                alertify.warning('Cuenta creada con Éxito');
+                setTimeout(function() {
+                    window.location.reload();
+                }, 1500)
+            }
+        },
+        error:function(data){
+            var errores = "¡Atención!";                        
+            if (data.responseJSON?.errors) {
+                $.each(data.responseJSON.errors, function(i, valor){
+                    errores += "<li>" +valor + "</li>";
+                });                       
+                alertify.success(errores);
+                $('#btnRegistrar').removeAttr('disabled');
+                $('#btnRegistrar').text('Registrarme');
+            }                                                                    
+        }
+    })
+}
+
+function login(data, token, route) {             
+    $.ajax({
+        url: route,
+        headers:{'X-CSRF-TOKEN':token},
+        type: 'POST',
+        dataType:"json",
+        data:data,
+        beforeSend: function( xhr ) { 
+            $('#btnLogin').text('Verificando ');                      
+            $('#btnLogin').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+            
+            $('#btnLogin').attr('disabled', 'disabled');
+        },
+        success:function(data){
+            if (data.mensaje = "existe") {
+                alertify.set('notifier','position', 'top-right');
+                alertify.warning('Acceso correcto...');
+                window.location.reload();
+            }
+        },
+        error:function(data){
+            var errores = "¡Atención!";
+            if (data.responseJSON.errors) {
+                $.each(data.responseJSON.errors, function(i, valor){
+                    errores += valor;
+                });                       
+                alertify.success(errores);
+                $('#btnLogin').removeAttr('disabled');
+                $('#btnLogin').text('Acceder');
+            }                                                                    
+        }
+    })
+}
+
 /*!
  * parallax.js v1.5.0 (http://pixelcog.github.io/parallax.js/)
  * @copyright 2016 PixelCog, Inc.
