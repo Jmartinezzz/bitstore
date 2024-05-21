@@ -182,85 +182,40 @@
         
     </script>
     @guest()
-        <script>
-            var data = $('#formLogin').serialize();             
-            var token = $('input[name=_token]').val();
-            var route = $(this).parents('form:first').attr('action'); 
+        <script>              
+            let formToken = $('input[name=_token]').val()
+
+            function getRegisterData(){
+                return $('#formRegistrar').serialize();
+            }
+            
+            function getLoginData(){
+                return $('#formLogin').serialize();
+            }
 
             $('#btnLogin').on('click',function(){    
-                data = $('#formLogin').serialize();             
-                token = $('input[name=_token]').val();
-                route = $(this).parents('form:first').attr('action');               
+                let route = $(this).parents('form:first').attr('action');
+                login(getLoginData(), formToken, route)
+            });
 
-                $.ajax({
-                    url: route,
-                    headers:{'X-CSRF-TOKEN':token},
-                    type: 'POST',
-                    dataType:"json",
-                    data:data,
-                    beforeSend: function( xhr ) { 
-                        $('#btnLogin').text('Verificando ');                      
-                        $('#btnLogin').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-                        
-                        $('#btnLogin').attr('disabled', 'disabled');
-                    },
-                    success:function(data){
-                        if (data.mensaje = "existe") {
-                            alertify.set('notifier','position', 'top-right');
-                            alertify.warning('Acceso correcto...');
-                            window.location.reload();
-                        }
-                    },
-                    error:function(data){
-                        var errores = "¡Atención!";                        
-                        console.log(data)
-                        if (data.responseJSON.errors) {
-                            $.each(data.responseJSON.errors, function(i, valor){
-                                errores += valor;
-                            });                       
-                            alertify.success(errores);
-                            $('#btnLogin').removeAttr('disabled');
-                            $('#btnLogin').text('Acceder');
-                        }                                                                    
-                    }
-                })
+            $('#formLogin').on('keydown',function(){    
+                let route = $(this).attr('action');
+                
+                if (event.key === 'Enter' || event.keyCode === 13) {
+                    login(getLoginData(), formToken, route)
+                }
             }); 
 
-            $('#btnRegistrar').on('click',function(){              
-                data = $('#formRegistrar').serialize();             
-                token = $('input[name=_token]').val();
-                route = $(this).parents('form:first').attr('action');               
+            $('#btnRegistrar').on('click',function(){          
+                route = $(this).parents('form:first').attr('action');
+                storeUser(getRegisterData(), formToken, route);
+            });
+            $('#formRegistrar').on('keydown',function(){
+                route = $(this).attr('action');
 
-                $.ajax({
-                    url: route,
-                    headers:{'X-CSRF-TOKEN':token},
-                    type: 'POST',
-                    dataType:"json",
-                    data:data,
-                    beforeSend: function( xhr ) { 
-                        $('#btnRegistrar').text('Verificando ');                      
-                        $('#btnRegistrar').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-                        
-                        $('#btnRegistrar').attr('disabled', 'disabled');
-                    },
-                    success:function(data){     
-                        if (data.mensaje = "creado") {
-                            alertify.warning('Cuenta creada con Éxito');
-                            window.location.reload();
-                        }
-                    },
-                    error:function(data){
-                        var errores = "¡Atención!";                        
-                        if (data.responseJSON.errors) {
-                            $.each(data.responseJSON.errors, function(i, valor){
-                                errores += "<li>" +valor + "</li>";
-                            });                       
-                            alertify.success(errores);
-                            $('#btnRegistrar').removeAttr('disabled');
-                            $('#btnRegistrar').text('Registrarme');
-                        }                                                                    
-                    }
-                })
+                if (event.key === 'Enter' || event.keyCode === 13) {
+                    storeUser(getRegisterData(), formToken, route);
+                }
             });
 
 
