@@ -45,7 +45,7 @@ Route::get('/juego-descuento', function(){
 	return view('store.info.juego');
 })->name('juego');
 
-Route::group(['prefix' => '/tienda'], function(){
+Route::group(['prefix' => '/tienda', 'middleware' => 'auth'], function(){
 
   	Route::get('/', 'StoreController@index')->name('store.index'); 
 
@@ -81,7 +81,11 @@ Route::group(['prefix' => '/tienda'], function(){
 
   	Route::get('/compras/historial', 'CartController@history')->name('history');
 
-  	Route::post('descargar-detalle', 'CartController@pdf')->name('cart.pdf');     
+  	Route::post('descargar-detalle', 'CartController@pdf')->name('cart.pdf');
+
+  	Route::get('my-account', 'Auth\AccountController@show')->name('account');
+  	Route::patch('my-account/{user}', 'Auth\AccountController@update')->name('account.update');
+  	Route::post('my-account/profile-img/{user}', 'Auth\AccountController@updateProfileImg')->name('account.update.img');
 });
 
 Auth::routes();

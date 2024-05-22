@@ -361,7 +361,7 @@
         datos += '&userId={{ $datosUsuario->id }}';
 
         $.ajax({            
-            url:'{{ route('saveAddress') }}',         
+            url:'{{ route('saveAddress') }}',
             headers:{'X-CSRF-TOKEN':token},
             type: 'PATCH',
             dataType:"json",
@@ -410,6 +410,7 @@
     $('#btnPagarCuentaFin').on('click', function(){
         $('#modalAbono').modal('hide');
         alertify.warning('Procesando...');
+        guardarPago();
     });
 
     $(function(){

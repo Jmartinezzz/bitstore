@@ -31,11 +31,16 @@
                 <li class="nav-item dropdown @yield('activeUser')">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }} <span class="caret"></span>
+                        <img class="rounded-circle" src="{{ Auth::user()->avatar_url }}" alt="Descripción de la imagen" width="25" height="25">
+
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">                      
                         <a class="dropdown-item" href="{{ route('history') }}">
                             Historial
+                        </a>
+                        <a class="dropdown-item" href="{{ route('account') }}">
+                            Cuenta
                         </a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
@@ -50,7 +55,7 @@
                 </li>
                 <li class="nav-item">
                     <a  href="{{ route('cart') }}">
-                        <i class="fas fa-shopping-cart text-white  mr-2 fa-3x"></i>
+                        <i class="fas fa-shopping-cart text-white ml-5 mr-2 fa-3x mt-2"></i>
                     </a>
                 </li>
             @endguest  

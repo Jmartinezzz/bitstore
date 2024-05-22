@@ -221,7 +221,7 @@
 
         </script>
     @endguest
-    @yield('scriptsFooter')    
+    @yield('scriptsFooter')
 </body>
 
 </html>

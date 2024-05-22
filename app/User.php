@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'lastName', 'city', 'email', 'password', 'address', 'phone', 'photo', 'gender', 
+        'name', 'lastName', 'city', 'email', 'password', 'address', 'phone', 'photo', 'gender'
     ];
 
     /**
@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'is_admin'
     ];
 
     /**
@@ -36,6 +36,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getAvatarUrlAttribute()
+    {
+        if ($this->img) {
+            return asset('img/avatares/' . $this->img);
+        }
+        
+        return null;
+    }
 
     public function orders()
     {

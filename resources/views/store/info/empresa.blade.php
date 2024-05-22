@@ -3,7 +3,7 @@
 @section('activeQs',"active")
 @section('content')
 <div class="container">      
-    <h1 class="mt-4 mb-3">¿Quienes somos?,
+    <h1 class="mt-4 mb-3">¿Quienes somos?
        <small>te lo contamos.</small>
     </h1>
       <!-- Intro Content -->
@@ -25,7 +25,6 @@
       <div class="row mt-4 mb-5">
         <div class="col-lg-4 mb-4">
           <div class="card text-center border-warning">
-            <img class="card-img-top img-responsive"  src="img/perfiles/fercho.jpeg" alt="">
             <div class="card-body">
               <h4 class="card-title">Fabio Portillo</h4>
               <h6 class="card-subtitle mb-2 text-muted">Desarrollador y DBA.</h6>
@@ -38,7 +37,6 @@
         </div>
         <div class="col-lg-4 mb-4">
           <div class="card text-center border-warning">
-            <img class="card-img-top img-responsive" src="img/perfiles/jorge.jpeg" alt="">
             <div class="card-body">
               <h4 class="card-title">Jorge Martínez.</h4>
               <h6 class="card-subtitle mb-2 text-muted">Desarrollador back y front end.</h6>
@@ -51,7 +49,6 @@
         </div>
         <div class="col-lg-4 mb-4">
           <div class="card text-center border-warning">
-            <img class="card-img-top img-responsive" style="height: 36%;" src="img/perfiles/yil.jpeg" alt="">
             <div class="card-body">
               <h4 class="card-title">David Córdoba.</h4>
               <h6 class="card-subtitle mb-2 text-muted">Desarrollador y DBA</h6>

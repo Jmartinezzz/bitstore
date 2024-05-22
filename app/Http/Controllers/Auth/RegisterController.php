@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use App\User;
 use App\Traits\Bot;
 use Illuminate\Http\Request;

@@ -4,7 +4,7 @@
 @section('content')
 <!-- banner inicio -->
 <div>
-    <img class="img-fluid" src="{{ asset('img/locales/banner.jpg') }}">     
+    <img class="img-fluid w-100" src="{{ asset('img/locales/banner.jpg') }}">     
 </div><!-- banner inicio -->
 
 <div class="container mt-4 shadow">
