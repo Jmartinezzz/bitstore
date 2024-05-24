@@ -35,7 +35,7 @@
                             <form id="uploadPicForm" enctype="multipart/form-data">
                                 @csrf
                                 <div class="profile-pic border border-warning p-1" onclick="document.getElementById('file-upload').click();">
-                                    <img id="img" class="rounded-circle w-100 h-100" src="{{ $user->avatar_url }}" alt="User Avatar">
+                                    <img id="img" class="rounded-circle w-100 h-100" src="{{ $user->avatar_url ?? asset('img/locales/user.jpg') }}" alt="User Avatar">
                                 </div>
                                 <input id="file-upload" class="file-upload" type="file" name="img">
                             </form>

@@ -31,7 +31,9 @@
                 <li class="nav-item dropdown @yield('activeUser')">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }} <span class="caret"></span>
-                        <img class="rounded-circle" src="{{ Auth::user()->avatar_url }}" alt="Descripción de la imagen" width="25" height="25">
+                        @if(Auth::user()->avatar_url)
+                            <img class="rounded-circle" src="{{ Auth::user()->avatar_url }}" alt="Descripción de la imagen" width="25" height="25">
+                        @endif
 
                     </a>
 

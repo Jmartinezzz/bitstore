@@ -76,7 +76,8 @@ class CartController extends Controller
             return redirect()->route('store.index');
         }
 
-        $products = Order::orderItems('history')->get();
+        $products = Order::orderItems('history')
+            ->paginate(4);
         return view('store.cart.history', ['productos' => $products]);
     }
 

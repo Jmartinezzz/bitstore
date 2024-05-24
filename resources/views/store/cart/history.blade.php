@@ -78,8 +78,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer text-muted bg-warning">
+                <div class="card-footer text-muted bg-warning d-flex justify-content-center">
                     <!-- text -->
+                    {{ $productos->links() }}
                 </div>
             </div>
         </div>
