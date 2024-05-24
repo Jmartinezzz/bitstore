@@ -2,9 +2,10 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -40,10 +41,15 @@ class User extends Authenticatable
     public function getAvatarUrlAttribute()
     {
         if ($this->img) {
-            return asset('img/avatares/' . $this->img);
+            return asset('storage/' . $this->img);
         }
-        
+
         return null;
+    }
+
+    public function setImgAttribute($value)
+    {
+        $this->attributes['img'] = 'avatares/' . ($value);
     }
 
     public function orders()

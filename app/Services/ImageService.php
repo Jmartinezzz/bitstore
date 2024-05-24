@@ -1,21 +1,21 @@
 <?php
 namespace App\Services;
 
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ImageService
 {
     public function uploadImage($file, $path)
     {
         $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path($path), $filename);
+        $file->storeAs('avatares', $filename, 'public');
         return $filename;
     }
 
     public function deleteImage($imagePath)
     {
-        if (File::exists($imagePath)) {
-            File::delete($imagePath);
+        if (Storage::disk('public')->exists($imagePath)) {
+            Storage::disk('public')->delete($imagePath);
         }
     }
 

@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Services\ImageService;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ImageUploadRequest;
 use App\Http\Requests\UpdateProfileRequest;
-use App\Services\ImageService;
 
 class AccountController extends Controller
 {
@@ -33,12 +34,11 @@ class AccountController extends Controller
     
     public function updateProfileImg(ImageUploadRequest $request, User $user)
     {
-        $newFilename = $this->imageService->uploadImage($request->file('img'), 'img/avatares');
+        $newFilename = $this->imageService->uploadImage($request->file('img'), 'avatares');
         if ($user->img) {
-            $deleteImagePath = public_path('img/avatares/' . $user->img);
-            $this->imageService->deleteImage($deleteImagePath);
+            $this->imageService->deleteImage($user->img);
         }
-        
+
         $user->img = $newFilename;
         $user->save();
         
